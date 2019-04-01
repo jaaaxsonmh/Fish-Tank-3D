@@ -17,6 +17,10 @@ import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 
+/**
+ * @author Jack Hosking
+ * @studentID 16932920
+ */
 
 public class TrackballCamera implements MouseListener, MouseMotionListener, MouseWheelListener {
 
