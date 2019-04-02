@@ -12,6 +12,7 @@ import com.jogamp.opengl.awt.GLCanvas;
 
 import com.jogamp.opengl.util.FPSAnimator;
 import com.jogamp.opengl.util.gl2.GLUT;
+import shapes.Cube;
 import utils.Colour;
 
 /**
@@ -21,11 +22,20 @@ import utils.Colour;
 
 public class Scene implements GLEventListener, KeyListener {
 
-//rgb(179, 229, 252)
-    private final Colour tankColour = new Colour(0.70196f, 0.89803f, 0.98823f, 0.2f);
+    //rgb(179, 229, 252)
+    private final Colour tankSide1 = new Colour(1.0f, 1.0f, 1.0f, 1.0f);
+    private final Colour tankSide2 = new Colour(0.0f, 0.89803f, 0.98823f, 1.0f);
+
+    private float fogDensity = 0.007f;
+
+
+    private static final float[] fogColour = new float[]{0.9568f, 0.9568f, 0.9568f};
+    private static final float[] fogColour2 = new float[]{1.0f, 1.0f, 1.0f};
+
+
+    private Cube cube = new Cube();
     private static GLCanvas canvas;
     private GLUT glut;
-    private float rquad = 45.0f;
 
     //track-ball camera
     private TrackballCamera camera = new TrackballCamera(canvas);
@@ -36,6 +46,8 @@ public class Scene implements GLEventListener, KeyListener {
 
         GL2 gl = drawable.getGL().getGL2();
         glut = new GLUT();
+        float positionRelativeToCam = (float) camera.getDistance() * (float) camera.getFieldOfView();
+
 
         // select and clear the model-view matrix
         gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
@@ -46,9 +58,71 @@ public class Scene implements GLEventListener, KeyListener {
         camera.draw(gl);
 
         gl.glDisable(GL2.GL_DEPTH_TEST);
-        Colour.setDynamicColourRGBA(tankColour, 0.3f, gl);
-        glut.glutSolidCube(5.0f);
+
+        // SIDE FRONT
+        gl.glPushMatrix();
+        Colour.setColourRGBA(tankSide1, gl);
+        gl.glTranslated(0, 0, 2);
+        gl.glScalef(5.0f, 3.0f, 0.1f);
+        cube.draw(glut, gl);
+        gl.glPopMatrix();
+
+        // SIDE REAR
+        gl.glPushMatrix();
+        Colour.setColourRGBA(tankSide1, gl);
+        gl.glTranslated(0, 0, -2);
+        gl.glScalef(5.0f, 3.0f, 0.1f);
+        cube.draw(glut, gl);
+        gl.glPopMatrix();
+
+        // RIGHT HAND SIDE
+        gl.glPushMatrix();
+        Colour.setColourRGBA(tankSide1, gl);
+        gl.glTranslated(2.45, 0, 0);
+        gl.glScalef(0.1f, 3.0f, 4.0f);
+        cube.draw(glut, gl);
+        gl.glPopMatrix();
+
+        // LEFT HAND SIDE
+        gl.glPushMatrix();
+        Colour.setColourRGBA(tankSide1, gl);
+        gl.glTranslated(-2.45, 0, 0);
+        gl.glScalef(0.1f, 3.0f, 4.0f);
+        cube.draw(glut, gl);
+        gl.glPopMatrix();
+
+        // BOTTOM
+        gl.glPushMatrix();
+        Colour.setColourRGBA(tankSide1, gl);
+        gl.glTranslated(0, -1.50, 0);
+        gl.glScalef(5.0f, 0.1f, 4.1f);
+        cube.draw(glut, gl);
+        gl.glPopMatrix();
+
+        // WATER
+        gl.glPushMatrix();
+        Colour.setColourRGBA(tankSide2, gl);
+        gl.glTranslated(0, -0.1, 0);
+        gl.glScalef(4.8f, 2.8f, 3.9f);
+        cube.draw(glut, gl);
+        gl.glPopMatrix();
+
         gl.glEnable(GL2.GL_DEPTH_TEST);
+
+        setUpFog(gl, positionRelativeToCam);
+
+        gl.glLineWidth(2.0f);
+        gl.glBegin(GL2.GL_LINES);
+        gl.glColor3d(1, 0, 0);
+        gl.glVertex3d(0, 0, 0);
+        gl.glVertex3d(2, 0, 0);
+        gl.glColor3d(0, 1, 0);
+        gl.glVertex3d(0, 0, 0);
+        gl.glVertex3d(0, 2, 0);
+        gl.glColor3d(0, 0, 1);
+        gl.glVertex3d(0, 0, 0);
+        gl.glVertex3d(0, 0, 2);
+        gl.glEnd();
 
 
         gl.glFlush();
@@ -67,15 +141,15 @@ public class Scene implements GLEventListener, KeyListener {
         gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         gl.setSwapInterval(1);
 
-        //<other init code here>
         gl.glShadeModel(GL2.GL_SMOOTH);
         camera = new TrackballCamera(canvas);
         camera.setLookAt(0, 0, 0);
-        camera.setDistance(10);
+        camera.setDistance(15);
         camera.setFieldOfView(40);
 
         //use the lights
         this.lights(gl);
+
 
         gl.glEnable(GL2.GL_DEPTH_TEST);
 
@@ -116,6 +190,23 @@ public class Scene implements GLEventListener, KeyListener {
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
 
     }
+
+    private void setUpFog(GL2 gl, float positionRelativeToCam) {
+
+        if (positionRelativeToCam < 800) {
+            fogDensity = 0.0f;
+        } else if (positionRelativeToCam >= 800 && positionRelativeToCam < 1000) {
+            fogDensity = 0.1f;
+        } else if (positionRelativeToCam >= 1000 && positionRelativeToCam <= 1200) {
+            fogDensity = 1.0f;
+        }
+
+        gl.glEnable(GL2.GL_FOG);
+        gl.glFogfv(GL2.GL_FOG_COLOR, fogColour2, 0);
+        gl.glFogf(GL2.GL_FOG_MODE, GL2.GL_EXP2);
+        gl.glFogf(GL2.GL_FOG_DENSITY, fogDensity);
+    }
+
 
     public static void main(String[] args) {
         Frame frame = new Frame("Jack's 3D Fish(y) Tank");
