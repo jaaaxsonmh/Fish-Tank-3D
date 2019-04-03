@@ -6,7 +6,6 @@ import utils.Colour;
 
 public class Cube {
 
-
     public void draw(GLUT glut, GL2 gl) {
         glut.glutSolidCube(1.0f);
     }
