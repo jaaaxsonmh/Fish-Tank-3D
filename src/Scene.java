@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import Objects.Water;
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.awt.GLCanvas;
 
@@ -22,24 +23,28 @@ import utils.Colour;
 
 public class Scene implements GLEventListener, KeyListener {
 
-    //rgb(179, 229, 252)
     private final Colour fish = new Colour(1.0f, 0.0f, 0.0f, 1.0f);
 
     private float fogDensity = 0.007f;
-    private float animate = -1.5f;
 
-
-    
     private static final float[] fogColour = new float[]{1.0f, 1.0f, 1.0f};
 
-    private Tank tank = new Tank(0, 0, 0, 7.0f, 0.1f, 4.0f);
-   
+    private Tank tank;
+    private Water water;
+
     private static GLCanvas canvas;
     private GLUT glut;
 
-    //track-ball camera
     private TrackballCamera camera = new TrackballCamera(canvas);
 
+    public Scene() {
+        float length = 5f;
+        float height = 1f;
+        float width = 4f;
+
+        tank = new Tank(length, height, width);
+        water = new Water(length, height, width);
+    }
 
     @Override
     public void display(GLAutoDrawable drawable) {
@@ -55,57 +60,36 @@ public class Scene implements GLEventListener, KeyListener {
         gl.glLoadIdentity();
 
         camera.draw(gl);
-//        
-//        gl.glDisable(GL2.GL_LIGHTING);
-//        gl.glDisable(GL2.GL_LIGHT0);
-//        gl.glDisable(GL2.GL_LIGHT1);
-//        gl.glEnable(GL2.GL_BLEND);
-//      
-//        gl.glDisable(GL2.GL_DEPTH_TEST);
-//        
-//     // WATER
-//        gl.glPushMatrix();
-//        Colour.setColourRGBA(tankSide2, gl);
-//        gl.glTranslated(0, -0.1, 0);
-//        gl.glScalef(4.8f, 2.8f, 3.9f);
-//        cube.draw(glut, gl);
-//        gl.glPopMatrix();
-//       
-        
+
+        gl.glDisable(GL2.GL_LIGHTING);
+        gl.glDisable(GL2.GL_LIGHT0);
+        gl.glDisable(GL2.GL_LIGHT1);
+
+        gl.glEnable(GL2.GL_BLEND);
+
+        gl.glDisable(GL2.GL_DEPTH_TEST);
+
+        water.draw(gl, glut);
         tank.draw(gl, glut);
-        
-   
-        animate += 0.005;
 
         setUpFog(gl, positionRelativeToCam);
 
-        gl.glLineWidth(2.0f);
-        gl.glBegin(GL2.GL_LINES);
-        gl.glColor3d(1, 0, 0);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(2, 0, 0);
-        gl.glColor3d(0, 1, 0);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 2, 0);
-        gl.glColor3d(0, 0, 1);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 0, 2);
-        gl.glEnd();
-        
+        // those lines for 3d
+        drawScale(gl);
 
-//        gl.glEnable(GL2.GL_DEPTH_TEST);
-//
-//        gl.glDisable(GL2.GL_BLEND);
-//        
-//        gl.glEnable(GL2.GL_LIGHTING);
-//        gl.glEnable(GL2.GL_LIGHT0);
-//        gl.glEnable(GL2.GL_LIGHT1);
-        
-//        gl.glPushMatrix();
-//        Colour.setColourRGBA(tankSide1, gl);
-//        gl.glTranslated(0, 3.25f, 0);
-//        glut.glutSolidSphere(0.3, 100, 40);
-//        gl.glPopMatrix();
+        gl.glEnable(GL2.GL_DEPTH_TEST);
+
+        gl.glDisable(GL2.GL_BLEND);
+
+        gl.glEnable(GL2.GL_LIGHTING);
+        gl.glEnable(GL2.GL_LIGHT0);
+        gl.glEnable(GL2.GL_LIGHT1);
+
+        gl.glPushMatrix();
+        Colour.setColourRGBA(fish, gl);
+        gl.glTranslated(0, 3.25f, 0);
+        glut.glutSolidSphere(0.3, 100, 40);
+        gl.glPopMatrix();
 
         gl.glFlush();
     }
@@ -171,6 +155,21 @@ public class Scene implements GLEventListener, KeyListener {
     @Override
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
 
+    }
+
+    private void drawScale(GL2 gl) {
+        gl.glLineWidth(2.0f);
+        gl.glBegin(GL2.GL_LINES);
+        gl.glColor3d(1, 0, 0);
+        gl.glVertex3d(0, 0, 0);
+        gl.glVertex3d(8, 0, 0);
+        gl.glColor3d(0, 1, 0);
+        gl.glVertex3d(0, 0, 0);
+        gl.glVertex3d(0, 8, 0);
+        gl.glColor3d(0, 0, 1);
+        gl.glVertex3d(0, 0, 0);
+        gl.glVertex3d(0, 0, 8);
+        gl.glEnd();
     }
 
     private void setUpFog(GL2 gl, float positionRelativeToCam) {
