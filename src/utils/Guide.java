@@ -9,7 +9,7 @@ import com.jogamp.opengl.util.gl2.GLUT;
 public class Guide  implements Drawable {
 
     @Override
-    public void drawQuadric(GL2 gl, GLU glu, GLUquadric quadric, boolean filled) {
+    public void draw(GL2 gl, GLU glu, GLUquadric quadric, boolean filled) {
         float LINE_SIZE = 20;
 
         gl.glBegin(GL.GL_LINES);
