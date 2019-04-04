@@ -6,13 +6,16 @@ import com.jogamp.opengl.util.gl2.GLUT;
 import shapes.Cube;
 import utils.Colour;
 
-public class Tank extends Cube{
+/**
+ * @author Jack Hosking
+ * @studentID 16932920
+ */
+
+public class Tank extends Cube {
 	
 	private final Colour tankSide = new Colour(1.0f, 1.0f, 1.0f, 0.3f);
-                                    //x    y     z   length, width, height
-    //private Tank tank = new Tank(2.45f, -1.5f, 2f, 5f, 0.1f, 3f);
 
-	public float length, height, width;
+	float length, height, width;
 	private static final float TANK_PANE = 0.1f;
 	
 	public Tank(float length, float height, float width) {

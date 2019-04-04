@@ -1,11 +1,3 @@
-//package <your package>;
-/**
- * Class for a simple camera that rotates around the point of view
- * using mouse dragging.
- *
- * @author Jacqueline Whalley
- */
-
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -33,8 +25,8 @@ public class TrackballCamera implements MouseListener, MouseMotionListener, Mous
     private double lookAt[] = {0, 0, 0};
 
     // the camera rotation angles
-    private double angleX = 0;
-    private double angleY = 0;
+    private double angleX = 45;
+    private double angleY = 15;
 
     // old mouse position for dragging
     private Point oldMousePos;

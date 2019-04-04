@@ -2,8 +2,12 @@ package Objects;
 
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.util.gl2.GLUT;
-import shapes.Cube;
 import utils.Colour;
+
+/**
+ * @author Jack Hosking
+ * @studentID 16932920
+ */
 
 public class Water extends Tank {
 

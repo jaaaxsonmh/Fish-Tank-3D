@@ -11,10 +11,13 @@ import com.jogamp.opengl.*;
 import com.jogamp.opengl.awt.GLCanvas;
 
 
+import com.jogamp.opengl.glu.GLU;
+import com.jogamp.opengl.glu.GLUquadric;
 import com.jogamp.opengl.util.FPSAnimator;
 import com.jogamp.opengl.util.gl2.GLUT;
 import Objects.Tank;
 import utils.Colour;
+import utils.Guide;
 
 /**
  * @author Jack Hosking
@@ -24,33 +27,39 @@ import utils.Colour;
 public class Scene implements GLEventListener, KeyListener {
 
     private final Colour fish = new Colour(1.0f, 0.0f, 0.0f, 1.0f);
+    private Guide guide;
 
     private float fogDensity = 0.007f;
 
-    private static final float[] fogColour = new float[]{1.0f, 1.0f, 1.0f};
+    private static final float[] fogColour = new float[]{0.9f, 0.9f, 0.9f};
 
     private Tank tank;
     private Water water;
 
     private static GLCanvas canvas;
+
     private GLUT glut;
+    private GLU glu;
+    private GLUquadric quadric;
+    private boolean filled;
 
     private TrackballCamera camera = new TrackballCamera(canvas);
 
     public Scene() {
         float length = 5f;
-        float height = 1f;
-        float width = 4f;
+        float height = 4f;
+        float width = 10f;
 
         tank = new Tank(length, height, width);
         water = new Water(length, height, width);
+        glut = new GLUT();
     }
 
     @Override
     public void display(GLAutoDrawable drawable) {
-
         GL2 gl = drawable.getGL().getGL2();
-        glut = new GLUT();
+
+        // calculate the position from the camera for fog.
         float positionRelativeToCam = (float) camera.getDistance() * (float) camera.getFieldOfView();
 
         // select and clear the model-view matrix
@@ -61,6 +70,14 @@ public class Scene implements GLEventListener, KeyListener {
 
         camera.draw(gl);
 
+
+        guide.draw(gl, glu, quadric, filled);
+
+        // change the rendering style based on key presses
+        int style = filled ? GLU.GLU_FILL : GLU.GLU_LINE;
+        glu.gluQuadricDrawStyle(quadric, style);
+
+
         gl.glDisable(GL2.GL_LIGHTING);
         gl.glDisable(GL2.GL_LIGHT0);
         gl.glDisable(GL2.GL_LIGHT1);
@@ -70,12 +87,9 @@ public class Scene implements GLEventListener, KeyListener {
         gl.glDisable(GL2.GL_DEPTH_TEST);
 
         water.draw(gl, glut);
+
         tank.draw(gl, glut);
 
-        setUpFog(gl, positionRelativeToCam);
-
-        // those lines for 3d
-        drawScale(gl);
 
         gl.glEnable(GL2.GL_DEPTH_TEST);
 
@@ -85,11 +99,7 @@ public class Scene implements GLEventListener, KeyListener {
         gl.glEnable(GL2.GL_LIGHT0);
         gl.glEnable(GL2.GL_LIGHT1);
 
-        gl.glPushMatrix();
-        Colour.setColourRGBA(fish, gl);
-        gl.glTranslated(0, 3.25f, 0);
-        glut.glutSolidSphere(0.3, 100, 40);
-        gl.glPopMatrix();
+        setUpFog(gl, positionRelativeToCam);
 
         gl.glFlush();
     }
@@ -97,18 +107,22 @@ public class Scene implements GLEventListener, KeyListener {
 
     @Override
     public void dispose(GLAutoDrawable drawable) {
-        // TODO Auto-generated method stub
-
+        glu.gluDeleteQuadric(quadric);
     }
 
     @Override
     public void init(GLAutoDrawable drawable) {
         GL2 gl = drawable.getGL().getGL2();
-        gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        gl.glClearColor(0.9f, 0.9f, 0.9f, 1.0f);
         gl.setSwapInterval(1);
 
         gl.glShadeModel(GL2.GL_SMOOTH);
         camera = new TrackballCamera(canvas);
+
+        glu = new GLU();
+        quadric = glu.gluNewQuadric();
+        guide = new Guide();
+
         camera.setLookAt(0, 0, 0);
         camera.setDistance(15);
         camera.setFieldOfView(40);
@@ -116,9 +130,7 @@ public class Scene implements GLEventListener, KeyListener {
         //use the lights
         this.lights(gl);
 
-
         gl.glEnable(GL2.GL_DEPTH_TEST);
-
     }
 
     private void lights(GL2 gl) {
@@ -157,20 +169,6 @@ public class Scene implements GLEventListener, KeyListener {
 
     }
 
-    private void drawScale(GL2 gl) {
-        gl.glLineWidth(2.0f);
-        gl.glBegin(GL2.GL_LINES);
-        gl.glColor3d(1, 0, 0);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(8, 0, 0);
-        gl.glColor3d(0, 1, 0);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 8, 0);
-        gl.glColor3d(0, 0, 1);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 0, 8);
-        gl.glEnd();
-    }
 
     private void setUpFog(GL2 gl, float positionRelativeToCam) {
 
@@ -210,6 +208,7 @@ public class Scene implements GLEventListener, KeyListener {
 
         // add event listeners
         canvas.addGLEventListener(fish3D);
+        canvas.addKeyListener(fish3D);
         frame.add(canvas);
         frame.setSize(500, 500);
 
@@ -234,6 +233,11 @@ public class Scene implements GLEventListener, KeyListener {
 
     }
 
+    // set the style, flip boolean value.
+    public void setFilled() {
+        filled = !filled;
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -246,6 +250,11 @@ public class Scene implements GLEventListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
+
+        if(key == KeyEvent.VK_R) {
+            setFilled();
+        }
 
     }
 }
