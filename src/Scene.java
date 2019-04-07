@@ -70,13 +70,11 @@ public class Scene implements GLEventListener, KeyListener {
 
         camera.draw(gl);
 
-        // draw the guide.
-        guide.draw(gl);
-
         // change the rendering style based on key presses
         int style = filled ? GLU.GLU_FILL : GLU.GLU_LINE;
         glu.gluQuadricDrawStyle(quadric, style);
 
+        guide.draw(gl, glu, quadric, filled);
 
         gl.glDisable(GL2.GL_LIGHTING);
         gl.glDisable(GL2.GL_LIGHT0);
@@ -91,6 +89,7 @@ public class Scene implements GLEventListener, KeyListener {
         tank.draw(gl, glut);
 
 
+
         gl.glEnable(GL2.GL_DEPTH_TEST);
 
         gl.glDisable(GL2.GL_BLEND);
@@ -98,6 +97,7 @@ public class Scene implements GLEventListener, KeyListener {
         gl.glEnable(GL2.GL_LIGHTING);
         gl.glEnable(GL2.GL_LIGHT0);
         gl.glEnable(GL2.GL_LIGHT1);
+
 
         setUpFog(gl, positionRelativeToCam);
 
@@ -253,7 +253,7 @@ public class Scene implements GLEventListener, KeyListener {
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
 
-        if(key == KeyEvent.VK_R) {
+        if (key == KeyEvent.VK_R) {
             setFilled();
         }
 

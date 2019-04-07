@@ -9,15 +9,15 @@ import utils.Drawable;
 
 import java.util.LinkedList;
 
-public class Fish implements Drawable {
+public class FishComponent implements Drawable {
 
-    private LinkedList<Fish> children;
+    private LinkedList<FishComponent> children;
     private double radius;
     private double height;
     private double rotationAngle, transX, transY, transZ;
     private AXIS axis;
 
-    Fish(double radius, double height, AXIS axis) {
+    FishComponent(double radius, double height, AXIS axis) {
         this.radius = radius;
         this.height = height;
         this.axis = axis;
@@ -30,7 +30,7 @@ public class Fish implements Drawable {
         // TODO TRANSFORM
 
         // draw each child
-        for (Fish child : children) {
+        for (FishComponent child : children) {
             child.draw(gl, glu, quadric, filled);
         }
 

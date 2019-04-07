@@ -2,11 +2,20 @@ package utils;
 
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.glu.GLU;
+import com.jogamp.opengl.glu.GLUquadric;
 
-public class Guide {
+public class Guide implements Drawable{
 
     public void draw(GL2 gl) {
+
+    }
+
+    @Override
+    public void draw(GL2 gl, GLU glu, GLUquadric quadric, boolean filled) {
         float LINE_SIZE = 20;
+
+        glu.gluSphere(quadric, 1, 10, 10);
 
         gl.glBegin(GL.GL_LINES);
         // Draw y line
@@ -29,5 +38,4 @@ public class Guide {
         gl.glVertex3f(0,0, LINE_SIZE /2);
         gl.glEnd();
     }
-
 }
