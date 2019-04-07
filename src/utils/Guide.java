@@ -2,14 +2,10 @@ package utils;
 
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
-import com.jogamp.opengl.glu.GLU;
-import com.jogamp.opengl.glu.GLUquadric;
-import com.jogamp.opengl.util.gl2.GLUT;
 
-public class Guide  implements Drawable {
+public class Guide {
 
-    @Override
-    public void draw(GL2 gl, GLU glu, GLUquadric quadric, boolean filled) {
+    public void draw(GL2 gl) {
         float LINE_SIZE = 20;
 
         gl.glBegin(GL.GL_LINES);

@@ -70,8 +70,8 @@ public class Scene implements GLEventListener, KeyListener {
 
         camera.draw(gl);
 
-
-        guide.draw(gl, glu, quadric, filled);
+        // draw the guide.
+        guide.draw(gl);
 
         // change the rendering style based on key presses
         int style = filled ? GLU.GLU_FILL : GLU.GLU_LINE;
@@ -198,6 +198,7 @@ public class Scene implements GLEventListener, KeyListener {
         System.out.println("1: SLOW ANIMATION SPEED");
         System.out.println("2: NORMAL ANIMATION SPEED");
         System.out.println("3: FAST ANIMATION SPEED");
+        System.out.print("R: Enable Wireframe");
 
         GLProfile profile = GLProfile.get(GLProfile.GL2);
         GLCapabilities capabilities = new GLCapabilities(profile);
@@ -234,7 +235,7 @@ public class Scene implements GLEventListener, KeyListener {
     }
 
     // set the style, flip boolean value.
-    public void setFilled() {
+    private void setFilled() {
         filled = !filled;
     }
 
