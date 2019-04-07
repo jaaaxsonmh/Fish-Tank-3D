@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import Objects.Fish;
 import Objects.Water;
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.awt.GLCanvas;
@@ -26,7 +27,6 @@ import utils.Guide;
 
 public class Scene implements GLEventListener, KeyListener {
 
-    private final Colour fish = new Colour(1.0f, 0.0f, 0.0f, 1.0f);
     private Guide guide;
 
     private float fogDensity = 0.007f;
@@ -35,6 +35,7 @@ public class Scene implements GLEventListener, KeyListener {
 
     private Tank tank;
     private Water water;
+    private Fish fish;
 
     private static GLCanvas canvas;
 
@@ -52,6 +53,7 @@ public class Scene implements GLEventListener, KeyListener {
 
         tank = new Tank(length, height, width);
         water = new Water(length, height, width);
+        fish = new Fish(1.0f);
         glut = new GLUT();
     }
 
@@ -74,7 +76,8 @@ public class Scene implements GLEventListener, KeyListener {
         int style = filled ? GLU.GLU_FILL : GLU.GLU_LINE;
         glu.gluQuadricDrawStyle(quadric, style);
 
-        guide.draw(gl, glu, quadric, filled);
+
+        fish.draw(gl, glu, quadric, filled);
 
         gl.glDisable(GL2.GL_LIGHTING);
         gl.glDisable(GL2.GL_LIGHT0);

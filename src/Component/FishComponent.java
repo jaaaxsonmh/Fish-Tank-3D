@@ -9,15 +9,16 @@ import utils.Drawable;
 
 import java.util.LinkedList;
 
-public class FishComponent implements Drawable {
+public abstract class FishComponent implements Drawable {
 
     private LinkedList<FishComponent> children;
-    private double radius;
-    private double height;
+    public double radius;
+    public double height;
     private double rotationAngle, transX, transY, transZ;
     private AXIS axis;
 
-    FishComponent(double radius, double height, AXIS axis) {
+    public FishComponent(double radius, double height, AXIS axis) {
+        children = new LinkedList<>();
         this.radius = radius;
         this.height = height;
         this.axis = axis;
@@ -27,7 +28,8 @@ public class FishComponent implements Drawable {
     public void draw(GL2 gl, GLU glu, GLUquadric quadric, boolean filled) {
         gl.glPushMatrix();
 
-        // TODO TRANSFORM
+        transformNode(gl);
+        drawNode(gl, glu, quadric, filled);
 
         // draw each child
         for (FishComponent child : children) {
@@ -35,6 +37,10 @@ public class FishComponent implements Drawable {
         }
 
         gl.glPopMatrix();
+    }
+
+    void addChild(FishComponent child) {
+        children.add(child);
     }
 
     private void transformNode(GL2 gl) {
@@ -65,4 +71,6 @@ public class FishComponent implements Drawable {
     void setRotation(double theta) {
         rotationAngle = theta;
     }
+
+    public abstract void drawNode(GL2 gl, GLU glu, GLUquadric quadric, boolean filled);
 }
