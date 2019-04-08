@@ -9,6 +9,11 @@ import utils.Drawable;
 
 import java.util.LinkedList;
 
+/**
+ * @author Jack Hosking
+ * @studentID 16932920
+ */
+
 public abstract class FishComponent implements Drawable {
 
     private LinkedList<FishComponent> children;

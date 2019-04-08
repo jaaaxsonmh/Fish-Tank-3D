@@ -5,6 +5,11 @@ import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.glu.GLUquadric;
 
+/**
+ * @author Jack Hosking
+ * @studentID 16932920
+ **/
+
 public class Guide implements Drawable{
 
     public void draw(GL2 gl) {
