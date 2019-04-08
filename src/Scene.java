@@ -198,8 +198,12 @@ public class Scene implements GLEventListener, KeyListener {
 		System.out.println("SPACE: pause/restart");
 		System.out.println("1: SLOW ANIMATION SPEED");
 		System.out.println("2: NORMAL ANIMATION SPEED");
-		System.out.println("3: FAST ANIMATION SPEED\n");
-		System.out.println("---- Console debugging ----");
+		System.out.println("3: FAST ANIMATION SPEED");
+        System.out.println("A / Z: Increase and decrease length");
+        System.out.println("S / X: Increase and decrease width");
+        System.out.println("D / C: Increase and decrease height\n");
+
+        System.out.println("---- Console debugging ----");
 
 		GLProfile profile = GLProfile.get(GLProfile.GL2);
 		GLCapabilities capabilities = new GLCapabilities(profile);
@@ -289,12 +293,10 @@ public class Scene implements GLEventListener, KeyListener {
 				System.out.println("\nSlow animator enabled");
 				System.out.println("Animator Speed: " + animatorSpeed + "");
 			}
-
 		}
 
 		if (key == KeyEvent.VK_2) {
 			if (animatorSpeed == 1.0) {
-				animatorSpeed = 1.0;
 				System.out.println("\nNormal animator already enabled");
 				System.out.println("Animator Speed: " + animatorSpeed);
 			} else {
@@ -318,29 +320,41 @@ public class Scene implements GLEventListener, KeyListener {
 		
 		if(key == KeyEvent.VK_A) {
 			length += 1.0f;
+            System.out.println("\nIncrease length");
 		}
 		if(key == KeyEvent.VK_S) {
 			width += 1.0f;
+            System.out.println("\nIncrease width");
 		}
 		if(key == KeyEvent.VK_D) {
 			height += 1.0f;
+            System.out.println("\nIncrease height");
 		}
 		
 		if(key == KeyEvent.VK_Z) {
 			length -= 1.0f;
+            System.out.println("\ndecrease length");
 		}
 		if(key == KeyEvent.VK_X) {
 			width -= 1.0f;
+            System.out.println("\ndecrease width");
 		}
 		if(key == KeyEvent.VK_C) {
 			height -= 1.0f;
+            System.out.println("\ndecrease height");
 		}
 
 		if (key != KeyEvent.VK_1
 				&& key != KeyEvent.VK_2
 				&& key != KeyEvent.VK_3 
 				&& key != KeyEvent.VK_SPACE
-				&& key != KeyEvent.VK_R) {
+				&& key != KeyEvent.VK_R
+                && key != KeyEvent.VK_A
+                && key != KeyEvent.VK_S
+                && key != KeyEvent.VK_D
+                && key != KeyEvent.VK_Z
+                && key != KeyEvent.VK_X
+                && key != KeyEvent.VK_C) {
 			System.out.println("\nNot a valid command");
 
 		}
