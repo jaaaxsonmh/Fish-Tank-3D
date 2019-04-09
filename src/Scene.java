@@ -89,9 +89,9 @@ public class Scene implements GLEventListener, KeyListener {
 
 		gl.glDisable(GL2.GL_DEPTH_TEST);
 
-		//water.draw(gl, glut);
+		water.draw(gl, glut);
 
-		//tank.draw(gl, glut);
+		tank.draw(gl, glut);
 
 		gl.glEnable(GL2.GL_DEPTH_TEST);
 
