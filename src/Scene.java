@@ -78,6 +78,7 @@ public class Scene implements GLEventListener, KeyListener {
 		int style = filled ? GLU.GLU_FILL : GLU.GLU_LINE;
 		glu.gluQuadricDrawStyle(quadric, style);
 
+
 		fish.draw(gl, glu, quadric, filled);
 
 		gl.glDisable(GL2.GL_LIGHTING);
@@ -88,9 +89,9 @@ public class Scene implements GLEventListener, KeyListener {
 
 		gl.glDisable(GL2.GL_DEPTH_TEST);
 
-		water.draw(gl, glut);
+		//water.draw(gl, glut);
 
-		tank.draw(gl, glut);
+		//tank.draw(gl, glut);
 
 		gl.glEnable(GL2.GL_DEPTH_TEST);
 

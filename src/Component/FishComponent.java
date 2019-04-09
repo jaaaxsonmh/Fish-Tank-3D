@@ -44,7 +44,7 @@ public abstract class FishComponent implements Drawable {
         gl.glPopMatrix();
     }
 
-    void addChild(FishComponent child) {
+    public void addChild(FishComponent child) {
         children.add(child);
     }
 
@@ -67,7 +67,7 @@ public abstract class FishComponent implements Drawable {
         }
     }
 
-    private void setTranslations(double x, double y, double z) {
+    public void setTranslations(double x, double y, double z) {
         transX = x;
         transY = y;
         transZ = z;

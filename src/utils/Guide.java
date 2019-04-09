@@ -12,15 +12,10 @@ import com.jogamp.opengl.glu.GLUquadric;
 
 public class Guide implements Drawable{
 
-    public void draw(GL2 gl) {
-
-    }
-
     @Override
     public void draw(GL2 gl, GLU glu, GLUquadric quadric, boolean filled) {
         float LINE_SIZE = 20;
 
-        glu.gluSphere(quadric, 1, 10, 10);
 
         gl.glBegin(GL.GL_LINES);
         // Draw y line
