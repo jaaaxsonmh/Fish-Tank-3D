@@ -1,4 +1,4 @@
-package Component;
+package component;
 
 
 import com.jogamp.opengl.GL2;
@@ -19,8 +19,11 @@ public abstract class FishComponent implements Drawable {
     private LinkedList<FishComponent> children;
     public double radius;
     public double height;
+    public double animatorSpeed;
     private double rotationAngle, transX, transY, transZ;
     private AXIS axis;
+    public double[] eqn = {0, 0.0, -1.0, 0};
+
 
     public FishComponent(double radius, double height, AXIS axis) {
         children = new LinkedList<>();
@@ -39,6 +42,7 @@ public abstract class FishComponent implements Drawable {
         // draw each child
         for (FishComponent child : children) {
             child.draw(gl, glu, quadric, filled);
+
         }
 
         gl.glPopMatrix();
@@ -77,5 +81,18 @@ public abstract class FishComponent implements Drawable {
         rotationAngle = theta;
     }
 
+    public double getSpeed() {
+        return animatorSpeed;
+    }
+
+    public void setSpeed(double animatorSpeed) {
+        this.animatorSpeed =  animatorSpeed;
+    }
+
+    public void setEqn(double[] eqn) {
+        this.eqn = eqn;
+    }
+
     public abstract void drawNode(GL2 gl, GLU glu, GLUquadric quadric, boolean filled);
+
 }

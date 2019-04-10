@@ -1,4 +1,4 @@
-package Objects;
+package objects;
 
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.util.gl2.GLUT;

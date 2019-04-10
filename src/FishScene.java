@@ -6,8 +6,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import Objects.Fish;
-import Objects.Water;
+import component.FishComponent;
+import objects.Fish;
+import objects.Water;
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.awt.GLCanvas;
 
@@ -15,8 +16,7 @@ import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.glu.GLUquadric;
 import com.jogamp.opengl.util.FPSAnimator;
 import com.jogamp.opengl.util.gl2.GLUT;
-import Objects.Tank;
-import utils.Colour;
+import objects.Tank;
 import utils.Guide;
 
 /**
@@ -24,7 +24,7 @@ import utils.Guide;
  * @studentID 16932920
  */
 
-public class Scene implements GLEventListener, KeyListener {
+public class FishScene implements GLEventListener, KeyListener {
 
 	private Guide guide;
 
@@ -42,16 +42,14 @@ public class Scene implements GLEventListener, KeyListener {
 	private GLU glu;
 	private GLUquadric quadric;
 	private boolean filled = true, animate;
-	private double animatorSpeed = 1.0;
-	private float length = 5f, width = 3f, height = 2f;
+	private float animatorSpeed = 0.002f;
+	public static float length = 5f;
+    public static float width = 3f;
+    public static float height = 2f;
 
 	private TrackballCamera camera = new TrackballCamera(canvas);
 
-	public Scene() {
-		
-
-		
-		
+	public FishScene() {
 		fish = new Fish(1.0f);
 		glut = new GLUT();
 	}
@@ -80,6 +78,7 @@ public class Scene implements GLEventListener, KeyListener {
 
 
 		fish.draw(gl, glu, quadric, filled);
+		fish.animate(animatorSpeed);
 
 		gl.glDisable(GL2.GL_LIGHTING);
 		gl.glDisable(GL2.GL_LIGHT0);
@@ -100,6 +99,8 @@ public class Scene implements GLEventListener, KeyListener {
 		gl.glEnable(GL2.GL_LIGHTING);
 		gl.glEnable(GL2.GL_LIGHT0);
 		gl.glEnable(GL2.GL_LIGHT1);
+
+		guide.draw(gl,glu, quadric, filled);
 
 		//setUpFog(gl, positionRelativeToCam);
 
@@ -210,7 +211,7 @@ public class Scene implements GLEventListener, KeyListener {
 		GLCapabilities capabilities = new GLCapabilities(profile);
 		canvas = new GLCanvas(capabilities);
 
-		Scene fish3D = new Scene();
+		FishScene fish3D = new FishScene();
 
 		// add event listeners
 		canvas.addGLEventListener(fish3D);
@@ -247,6 +248,8 @@ public class Scene implements GLEventListener, KeyListener {
 	private void setAnimate() {
 		animate = !animate;
 	}
+
+
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -285,35 +288,33 @@ public class Scene implements GLEventListener, KeyListener {
 		}
 
 		if (key == KeyEvent.VK_1) {
-			if (animatorSpeed == 0.5) {
-				animatorSpeed = 1.0;
-				System.out.println("\nSlow animator disabled, normal animation started");
+			if (animatorSpeed == 0.002f) {
+				System.out.println("\nSlow animator already enabled");
 				System.out.println("Animator Speed: " + animatorSpeed + "");
 			} else {
-				animatorSpeed = 0.5;
+				animatorSpeed = 0.002f;
 				System.out.println("\nSlow animator enabled");
 				System.out.println("Animator Speed: " + animatorSpeed + "");
 			}
 		}
 
 		if (key == KeyEvent.VK_2) {
-			if (animatorSpeed == 1.0) {
+			if (animatorSpeed == 0.004f) {
 				System.out.println("\nNormal animator already enabled");
 				System.out.println("Animator Speed: " + animatorSpeed);
 			} else {
-				animatorSpeed = 1.0;
+				animatorSpeed = 0.004f;
 				System.out.println("\nNormal animator enabled");
 				System.out.println("Animator Speed: " + animatorSpeed);
 			}
 		}
 
 		if (key == KeyEvent.VK_3) {
-			if (animatorSpeed == 1.5) {
-				animatorSpeed = 1.0;
-				System.out.println("\nFast animator disabled, normal animation started");
+			if (animatorSpeed == 0.008f) {
+				System.out.println("\nFast animator already enabled");
 				System.out.println("Animator Speed: " + animatorSpeed);
 			} else {
-				animatorSpeed = 1.5;
+				animatorSpeed = 0.008f;
 				System.out.println("\nFast animator enabled");
 				System.out.println("Animator Speed: " + animatorSpeed);
 			}
