@@ -28,7 +28,7 @@ public class Fish implements Drawable {
     private float vx = 0.003f, vy = 0.003f, vz = 0.003f;
 
 
-    private double height, radius;
+    private float height, radius;
 
 
     private double[] eqn0 = {0, 0.0, 1.0, 0};
@@ -38,8 +38,8 @@ public class Fish implements Drawable {
     private FishComponent root;
 
     public Fish(float size) {
-        radius = size * 0.5;
-        height = size * 0.25;
+        radius = size * 0.5f;
+        height = size * 0.25f;
 
         x = 0;
         y = 0;
@@ -104,32 +104,41 @@ public class Fish implements Drawable {
         z += vz * speed;
         System.out.println(rotation);
 
-        if (y > (Tank.height / 2) - (radius * 0.25)) {
+        if (y > (Tank.height / 2) - (radius * 0.25f)) {
             vy = -vy;
+            y = (Tank.height / 2) - (radius * 0.25f);
+
             System.out.println("Move Y -");
             rotation = -90;
         } else if (y < (-Tank.height / 2) + (radius)) {
             vy = -vy;
+            y = (-Tank.height / 2) + (radius);
             System.out.println("Move Y +");
             rotation = 90;
         }
 
         if (x > (Tank.length / 2) - (radius)) {
             vx = -vx;
+            x = (Tank.length / 2) - (radius);
             System.out.println("Move X -");
             rotation = 225;
         } else if (x < -(Tank.length / 2) + (radius)) {
             vx = -vx;
+            x = -(Tank.length / 2) + (radius);
+
             System.out.println("Move X +");
             rotation = -225;
         }
 
         if (z > (Tank.width / 2) - (radius)) {
             vz = -vz;
+            z = (Tank.width / 2) - (radius);
             System.out.println("Move Z -");
             rotation = 135;
         } else if (z < -(Tank.width / 2) + (radius)) {
             vz = -vz;
+            z = -(Tank.width / 2) + (radius);
+
             System.out.println("Move Z +");
             rotation = -135;
         }
