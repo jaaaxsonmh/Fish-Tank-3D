@@ -21,7 +21,7 @@ import utils.Guide;
 
 /**
  * @author Jack Hosking
- * @studentID 16932920
+ * Studen ID16932920
  */
 
 public class FishScene implements GLEventListener, KeyListener {
@@ -42,14 +42,14 @@ public class FishScene implements GLEventListener, KeyListener {
 	private GLU glu;
 	private GLUquadric quadric;
 	private boolean filled = true, animate;
-	private float animatorSpeed = 0.002f;
-	public static float length = 5f;
-    public static float width = 3f;
-    public static float height = 2f;
+	private float animatorSpeed = 1.0f;
+	private static float length = 5f;
+    private static float width = 3f;
+    private static float height = 2f;
 
 	private TrackballCamera camera = new TrackballCamera(canvas);
 
-	public FishScene() {
+	private FishScene() {
 		fish = new Fish(1.0f);
 		glut = new GLUT();
 	}
@@ -88,9 +88,9 @@ public class FishScene implements GLEventListener, KeyListener {
 
 		gl.glDisable(GL2.GL_DEPTH_TEST);
 
-		water.draw(gl, glut);
+		//water.draw(gl, glut);
 
-		tank.draw(gl, glut);
+		//tank.draw(gl, glut);
 
 		gl.glEnable(GL2.GL_DEPTH_TEST);
 
@@ -288,33 +288,33 @@ public class FishScene implements GLEventListener, KeyListener {
 		}
 
 		if (key == KeyEvent.VK_1) {
-			if (animatorSpeed == 0.002f) {
+			if (animatorSpeed == 0.5f) {
 				System.out.println("\nSlow animator already enabled");
 				System.out.println("Animator Speed: " + animatorSpeed + "");
 			} else {
-				animatorSpeed = 0.002f;
+				animatorSpeed = 0.5f;
 				System.out.println("\nSlow animator enabled");
 				System.out.println("Animator Speed: " + animatorSpeed + "");
 			}
 		}
 
 		if (key == KeyEvent.VK_2) {
-			if (animatorSpeed == 0.004f) {
+			if (animatorSpeed == 1.0f) {
 				System.out.println("\nNormal animator already enabled");
 				System.out.println("Animator Speed: " + animatorSpeed);
 			} else {
-				animatorSpeed = 0.004f;
+				animatorSpeed = 1.0f;
 				System.out.println("\nNormal animator enabled");
 				System.out.println("Animator Speed: " + animatorSpeed);
 			}
 		}
 
 		if (key == KeyEvent.VK_3) {
-			if (animatorSpeed == 0.008f) {
+			if (animatorSpeed == 1.5f) {
 				System.out.println("\nFast animator already enabled");
 				System.out.println("Animator Speed: " + animatorSpeed);
 			} else {
-				animatorSpeed = 0.008f;
+				animatorSpeed = 1.5f;
 				System.out.println("\nFast animator enabled");
 				System.out.println("Animator Speed: " + animatorSpeed);
 			}

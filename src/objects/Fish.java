@@ -14,7 +14,7 @@ import objects.Water;
 
 /**
  * @author Jack Hosking
- * @studentID 16932920
+ * Student ID 16932920
  */
 
 public class Fish implements Drawable {
@@ -22,11 +22,13 @@ public class Fish implements Drawable {
     private final Colour fish = new Colour(1.0f, 0.65490f, 0.14901f, 1.0f);
     private final Colour sclera = new Colour(1.0f, 1.0f, 1.0f, 1.0f);
     private final Colour pupil = new Colour(0.0f, 0.0f, 0.0f, 1.0f);
-    private int finMovementCount = 0;
-    private double finMovement = 0;
+
     private float rotation = 0;
-    private float x,y,z;
-    private float vx, vy, vz;
+    private float x, y, z;
+    private float vx = 0.003f, vy = 0.003f, vz = 0.003f;
+
+
+    private double height, radius;
 
 
     private double[] eqn0 = {0, 0.0, 1.0, 0};
@@ -36,9 +38,9 @@ public class Fish implements Drawable {
     private FishComponent root;
 
     public Fish(float size) {
-        double radius = size * 0.5;
-        double height = size * 0.25;
-        finMovement = 0.002f;
+        radius = size * 0.5;
+        height = size * 0.25;
+
         x = 0;
         y = 0;
         z = 0;
@@ -67,12 +69,6 @@ public class Fish implements Drawable {
         root.addChild(leftEyeSclera);
         root.addChild(rightEyeSclera);
 
-
-        finMovementCount++;
-        if (finMovementCount > 5) {
-            finMovement *= -1;
-            finMovementCount = 0;
-        }
 
         FishFin leftFin = new FishFin(radius, height, AXIS.X);
         leftFin.setEqn(eqn0);
@@ -103,50 +99,45 @@ public class Fish implements Drawable {
 
     public void animate(float speed) {
 
-        y += vy + speed;
-        x += vy + speed;
-        z += vz + speed;
+        y += vy * speed;
+        x += vy * speed;
+        z += vz * speed;
+        System.out.println(rotation);
 
-        System.out.println("X: " + x + "\n"
-                +"Y: " + y + "\n"
-                +"Z: " + z + "\n"
-                +"VX: " + vx + "\n"
-                +"VY: " + vy + "\n"
-                +"VZ: " + vz + "\n"
-        );
-
-        if(y > (Tank.height / 2)) {
-            vy -= speed ;
+        if (y > (Tank.height / 2) - (radius * 0.25)) {
+            vy = -vy;
             System.out.println("Move Y -");
-        } else if (y < (-Tank.height / 2)) {
-            vy += speed;
-            System.out.println("Move Y +");
-        }
-
-        if(x > (Tank.length / 2)) {
-            vx -= speed;
-            System.out.println("Move X -");
-            rotation = 180;
-        } else if (x < -(Tank.length / 2)) {
-            vx += speed;
-            System.out.println("Move X +");
-            rotation = -180;
-        }
-
-        if(z > (Tank.width / 2)) {
-            vz -= speed;
-            System.out.println("Move Z -");
-            rotation = 90;
-        } else if (z < -(Tank.width / 2)) {
-            vz += speed;
-            System.out.println("Move Z +");
             rotation = -90;
+        } else if (y < (-Tank.height / 2) + (radius)) {
+            vy = -vy;
+            System.out.println("Move Y +");
+            rotation = 90;
+        }
+
+        if (x > (Tank.length / 2) - (radius)) {
+            vx = -vx;
+            System.out.println("Move X -");
+            rotation = 225;
+        } else if (x < -(Tank.length / 2) + (radius)) {
+            vx = -vx;
+            System.out.println("Move X +");
+            rotation = -225;
+        }
+
+        if (z > (Tank.width / 2) - (radius)) {
+            vz = -vz;
+            System.out.println("Move Z -");
+            rotation = 135;
+        } else if (z < -(Tank.width / 2) + (radius)) {
+            vz = -vz;
+            System.out.println("Move Z +");
+            rotation = -135;
         }
 
     }
 
     public class FishBody extends FishComponent {
-        public FishBody(double radius, double height, AXIS axis) {
+        FishBody(double radius, double height, AXIS axis) {
             super(radius, height, axis);
         }
 
@@ -161,7 +152,7 @@ public class Fish implements Drawable {
     }
 
     public class FishFin extends FishComponent {
-        public FishFin(double radius, double height, AXIS axis) {
+        FishFin(double radius, double height, AXIS axis) {
             super(radius, height, axis);
         }
 
@@ -198,7 +189,7 @@ public class Fish implements Drawable {
     }
 
     public class FishEye extends FishComponent {
-        public FishEye(double radius, double height, AXIS axis) {
+        FishEye(double radius, double height, AXIS axis) {
             super(radius, height, axis);
         }
 
@@ -213,7 +204,7 @@ public class Fish implements Drawable {
     }
 
     public class FishEyePupil extends FishComponent {
-        public FishEyePupil(double radius, double height, AXIS axis) {
+        FishEyePupil(double radius, double height, AXIS axis) {
             super(radius, height, axis);
         }
 
