@@ -113,6 +113,7 @@ public class Fish implements Drawable {
         } else if (y < (-Tank.height / 2) + (radius)) {
             vy = -vy;
             y = (-Tank.height / 2) + (radius);
+
             System.out.println("Move Y +");
             rotation = 90;
         }
@@ -120,6 +121,7 @@ public class Fish implements Drawable {
         if (x > (Tank.length / 2) - (radius)) {
             vx = -vx;
             x = (Tank.length / 2) - (radius);
+
             System.out.println("Move X -");
             rotation = 225;
         } else if (x < -(Tank.length / 2) + (radius)) {
