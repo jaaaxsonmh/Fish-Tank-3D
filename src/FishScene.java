@@ -88,9 +88,9 @@ public class FishScene implements GLEventListener, KeyListener {
 
 		gl.glDisable(GL2.GL_DEPTH_TEST);
 
-		//water.draw(gl, glut);
+		water.draw(gl, glut);
 
-		//tank.draw(gl, glut);
+		tank.draw(gl, glut);
 
 		gl.glEnable(GL2.GL_DEPTH_TEST);
 
@@ -310,11 +310,11 @@ public class FishScene implements GLEventListener, KeyListener {
 		}
 
 		if (key == KeyEvent.VK_3) {
-			if (animatorSpeed == 1.5f) {
+			if (animatorSpeed == 4.0f) {
 				System.out.println("\nFast animator already enabled");
 				System.out.println("Animator Speed: " + animatorSpeed);
 			} else {
-				animatorSpeed = 1.5f;
+				animatorSpeed = 4.0f;
 				System.out.println("\nFast animator enabled");
 				System.out.println("Animator Speed: " + animatorSpeed);
 			}
