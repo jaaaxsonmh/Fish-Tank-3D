@@ -10,6 +10,8 @@ import utils.Drawable;
 
 import objects.Tank;
 import objects.Water;
+import utils.Rand;
+
 
 
 /**
@@ -25,7 +27,7 @@ public class Fish implements Drawable {
 
     private float rotation = 0;
     private float x, y, z;
-    private float vx = 0.003f, vy = 0.003f, vz = 0.003f;
+    private float vx = Rand.getFloatBetween(0.002f, 0.005f), vy =  Rand.getFloatBetween(0.002f, 0.005f), vz =  Rand.getFloatBetween(0.002f, 0.005f);
 
 
     private float height, radius;
@@ -51,7 +53,6 @@ public class Fish implements Drawable {
         FishEye leftEyeSclera = new FishEye(radius, height, AXIS.X);
         leftEyeSclera.setTranslations(radius * 0.8, height * 0.5, size * 0.1);
 
-
         // Eye Pupil :: Child of the Sclera
         FishEyePupil leftEyePupil = new FishEyePupil(radius * 0.8, height * 0.8, AXIS.X);
         leftEyePupil.setTranslations(height * 0.19, 0, 0);
@@ -69,17 +70,18 @@ public class Fish implements Drawable {
         root.addChild(leftEyeSclera);
         root.addChild(rightEyeSclera);
 
-
+        //Fin :: Child of body
         FishFin leftFin = new FishFin(radius, height, AXIS.X);
-        leftFin.setEqn(eqn0);
         leftFin.setTranslations(0, 0, height * 0.8);
 
+        leftFin.setEqn(eqn0);
+
+        //Fin :: Child Body
         FishFin rightFin = new FishFin(radius, height, AXIS.X);
         rightFin.setTranslations(0, 0, -height * 0.8);
 
         root.addChild(leftFin);
         root.addChild(rightFin);
-
     }
 
     @Override
@@ -144,7 +146,6 @@ public class Fish implements Drawable {
             System.out.println("Move Z +");
             rotation = -135;
         }
-
     }
 
     public class FishBody extends FishComponent {
