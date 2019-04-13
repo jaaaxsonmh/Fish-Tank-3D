@@ -8,17 +8,17 @@ import utils.Colour;
 
 /**
  * @author Jack Hosking
- * @studentID 16932920
+ * Student ID 16932920
  */
 
 public class Tank extends Cube {
 	
 	private final Colour tankSide = new Colour(1.0f, 1.0f, 1.0f, 0.3f);
 
-	public static float length;
-    public static float height;
-    public static float width;
-	private static final float TANK_PANE = 0.1f;
+	static float length;
+    static float height;
+    static float width;
+	private static final float TANK_PANE = 0.01f;
 	
 	public Tank(float length, float height, float width) {
 		Tank.length = length;
@@ -33,7 +33,6 @@ public class Tank extends Cube {
 		float frontRearPos = width / 2;
 		float zSize = width + TANK_PANE;
 		float ySize = height + TANK_PANE;
-
 
 		// SIDE FRONT
         gl.glPushMatrix();
@@ -71,7 +70,7 @@ public class Tank extends Cube {
         gl.glPushMatrix();
         Colour.setColourRGBA(tankSide, gl);
         gl.glTranslated(0, -yPos, 0);
-        gl.glScalef(length, TANK_PANE, width);
+        gl.glScalef(length, TANK_PANE * 2, width);
         super.draw(glut);
         gl.glPopMatrix();
 	}

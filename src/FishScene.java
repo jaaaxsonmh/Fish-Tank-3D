@@ -41,7 +41,7 @@ public class FishScene implements GLEventListener, KeyListener {
 	private GLUT glut;
 	private GLU glu;
 	private GLUquadric quadric;
-	private boolean filled = true, animateEnabled = false, guideEnabled = false;
+	private boolean filled = true, animateEnabled = true, guideEnabled = false;
 	private float animatorSpeed = 1.0f;
 	private static float length = 5f;
     private static float width = 3f;
@@ -77,13 +77,13 @@ public class FishScene implements GLEventListener, KeyListener {
 		glu.gluQuadricDrawStyle(quadric, style);
 
 
-		fish.draw(gl, glu, quadric, filled);
+        fish.draw(gl, glu, quadric, filled);
 
-		if(animateEnabled) {
+        if(animateEnabled) {
             fish.animate(animatorSpeed);
         }
 
-		gl.glDisable(GL2.GL_LIGHTING);
+        gl.glDisable(GL2.GL_LIGHTING);
 		gl.glDisable(GL2.GL_LIGHT0);
 		gl.glDisable(GL2.GL_LIGHT1);
 
@@ -91,11 +91,11 @@ public class FishScene implements GLEventListener, KeyListener {
 
 		gl.glDisable(GL2.GL_DEPTH_TEST);
 
-		water.draw(gl, glut);
+        water.draw(gl, glut);
+        tank.draw(gl, glut);
 
-		tank.draw(gl, glut);
 
-		gl.glEnable(GL2.GL_DEPTH_TEST);
+        gl.glEnable(GL2.GL_DEPTH_TEST);
 
 		gl.glDisable(GL2.GL_BLEND);
 
@@ -103,11 +103,12 @@ public class FishScene implements GLEventListener, KeyListener {
 		gl.glEnable(GL2.GL_LIGHT0);
 		gl.glEnable(GL2.GL_LIGHT1);
 
-		if(guideEnabled) {
+        if(guideEnabled) {
             guide.draw(gl,glu, quadric, filled);
         }
 
-		//setUpFog(gl, positionRelativeToCam);
+
+        //setUpFog(gl, positionRelativeToCam);
 
 		gl.glFlush();
 	}
@@ -186,8 +187,6 @@ public class FishScene implements GLEventListener, KeyListener {
 			fogDensity = 1.0f;
 		}
 		
-		
-		
 		gl.glEnable(GL2.GL_FOG);
 		gl.glFogfv(GL2.GL_FOG_COLOR, fogColour, 0);
 		gl.glFogf(GL2.GL_FOG_MODE, GL2.GL_EXP2);
@@ -210,7 +209,6 @@ public class FishScene implements GLEventListener, KeyListener {
         System.out.println("A / Z: Increase and decrease length");
         System.out.println("S / X: Increase and decrease width");
         System.out.println("D / C: Increase and decrease height\n");
-
         System.out.println("---- Console debugging ----");
 
 		GLProfile profile = GLProfile.get(GLProfile.GL2);
@@ -257,7 +255,6 @@ public class FishScene implements GLEventListener, KeyListener {
 
 	private void setGuide() { guideEnabled = !guideEnabled;
 	}
-
 
 	@Override
 	public void keyTyped(KeyEvent e) {

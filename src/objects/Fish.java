@@ -159,18 +159,20 @@ public class Fish implements Drawable {
         y += vy * speed;
         z += vz * speed;
 
-        System.out.println(tailRotation);
         if (tailRotation == 45) {
             tailRotationFlipped = false;
         } else if (tailRotation == -45) {
             tailRotationFlipped = true;
         }
 
+
         if (tailRotationFlipped) {
             tailRotation += 1;
         } else {
             tailRotation -= 1;
         }
+
+        rotation += 0.1f;
 
         if (y > (Tank.height / 2) - (radius * 0.25f + (radius * 0.3f))) {
             vy = -vy;
@@ -214,7 +216,7 @@ public class Fish implements Drawable {
     }
 
     public class FishBody extends FishComponent {
-        public FishBody(double radius, double height) {
+        FishBody(double radius, double height) {
             super(radius, height);
         }
 
@@ -229,7 +231,7 @@ public class Fish implements Drawable {
     }
 
     public class FishFinLeft extends FishComponent {
-        public FishFinLeft(double radius, double height) {
+        FishFinLeft(double radius, double height) {
             super(radius, height);
         }
 
@@ -250,7 +252,7 @@ public class Fish implements Drawable {
     }
 
     public class FishFinRight extends FishComponent {
-        public FishFinRight(double radius, double height) {
+        FishFinRight(double radius, double height) {
             super(radius, height);
         }
 
@@ -272,7 +274,7 @@ public class Fish implements Drawable {
 
 
     public class FishTailTop extends FishComponent {
-        public FishTailTop(double radius, double height) {
+        FishTailTop(double radius, double height) {
             super(radius, height);
         }
 
@@ -296,7 +298,7 @@ public class Fish implements Drawable {
     }
 
     public class FishTailBottom extends FishComponent {
-        public FishTailBottom(double radius, double height) {
+        FishTailBottom(double radius, double height) {
             super(radius, height);
         }
 
@@ -321,7 +323,7 @@ public class Fish implements Drawable {
 
 
     public class FishSail extends FishComponent {
-        public FishSail(double radius, double height) {
+        FishSail(double radius, double height) {
             super(radius, height);
         }
 
@@ -343,7 +345,7 @@ public class Fish implements Drawable {
     }
 
     public class FishEye extends FishComponent {
-        public FishEye(double radius, double height) {
+        FishEye(double radius, double height) {
             super(radius, height);
         }
 
