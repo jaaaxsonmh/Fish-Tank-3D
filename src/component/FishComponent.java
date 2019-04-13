@@ -21,6 +21,7 @@ public abstract class FishComponent implements Drawable {
     public double height;
     private double rotationAngle, transX, transY, transZ;
     public double[] eqn;
+    private double theta, v1, v2, v3;
 
 
     public FishComponent(double radius, double height) {
@@ -35,7 +36,6 @@ public abstract class FishComponent implements Drawable {
 
         transformNode(gl);
         drawNode(gl, glu, quadric, filled);
-
         // draw each child
         for (FishComponent child : children) {
             child.draw(gl, glu, quadric, filled);
@@ -58,10 +58,6 @@ public abstract class FishComponent implements Drawable {
         transX = x;
         transY = y;
         transZ = z;
-    }
-
-    void setRotation(double theta) {
-        rotationAngle = theta;
     }
 
     public void setEqn(double[] eqn) {

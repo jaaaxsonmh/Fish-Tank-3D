@@ -41,7 +41,7 @@ public class FishScene implements GLEventListener, KeyListener {
 	private GLUT glut;
 	private GLU glu;
 	private GLUquadric quadric;
-	private boolean filled = true, animate;
+	private boolean filled = true, animateEnabled = false, guideEnabled = false;
 	private float animatorSpeed = 1.0f;
 	private static float length = 5f;
     private static float width = 3f;
@@ -78,7 +78,10 @@ public class FishScene implements GLEventListener, KeyListener {
 
 
 		fish.draw(gl, glu, quadric, filled);
-		fish.animate(animatorSpeed);
+
+		if(animateEnabled) {
+            fish.animate(animatorSpeed);
+        }
 
 		gl.glDisable(GL2.GL_LIGHTING);
 		gl.glDisable(GL2.GL_LIGHT0);
@@ -100,7 +103,9 @@ public class FishScene implements GLEventListener, KeyListener {
 		gl.glEnable(GL2.GL_LIGHT0);
 		gl.glEnable(GL2.GL_LIGHT1);
 
-		guide.draw(gl,glu, quadric, filled);
+		if(guideEnabled) {
+            guide.draw(gl,glu, quadric, filled);
+        }
 
 		//setUpFog(gl, positionRelativeToCam);
 
@@ -196,8 +201,9 @@ public class FishScene implements GLEventListener, KeyListener {
 		// key mapping console prints
 
 		System.out.println("------- Key mapping -------");
-		System.out.println("R: WIREFRAME");
-		System.out.println("SPACE: pause/restart");
+		System.out.println("W: Wireframe");
+        System.out.println("G: X/Y/Z Guides");
+        System.out.println("SPACE: pause/restart");
 		System.out.println("1: SLOW ANIMATION SPEED");
 		System.out.println("2: NORMAL ANIMATION SPEED");
 		System.out.println("3: FAST ANIMATION SPEED");
@@ -246,9 +252,11 @@ public class FishScene implements GLEventListener, KeyListener {
 	}
 
 	private void setAnimate() {
-		animate = !animate;
+		animateEnabled = !animateEnabled;
 	}
 
+	private void setGuide() { guideEnabled = !guideEnabled;
+	}
 
 
 	@Override
@@ -265,7 +273,7 @@ public class FishScene implements GLEventListener, KeyListener {
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		if (key == KeyEvent.VK_R) {
+		if (key == KeyEvent.VK_W) {
 
 			if (filled) {
 				System.out.println("Wireframe enabled");
@@ -278,7 +286,7 @@ public class FishScene implements GLEventListener, KeyListener {
 
 		if (key == KeyEvent.VK_SPACE) {
 
-			if (animate) {
+			if (animateEnabled) {
 				System.out.println("Animation paused");
 			} else {
 				System.out.println("Animation restart");
@@ -319,6 +327,15 @@ public class FishScene implements GLEventListener, KeyListener {
 				System.out.println("Animator Speed: " + animatorSpeed);
 			}
 		}
+
+		if(key == KeyEvent.VK_G) {
+		    if(guideEnabled) {
+		        System.out.println("Guide disabled");
+            } else {
+                System.out.println("Guide enabled");
+            }
+			setGuide();
+		}
 		
 		if(key == KeyEvent.VK_A) {
 			length += 1.0f;
@@ -350,13 +367,14 @@ public class FishScene implements GLEventListener, KeyListener {
 				&& key != KeyEvent.VK_2
 				&& key != KeyEvent.VK_3 
 				&& key != KeyEvent.VK_SPACE
-				&& key != KeyEvent.VK_R
+				&& key != KeyEvent.VK_W
                 && key != KeyEvent.VK_A
                 && key != KeyEvent.VK_S
                 && key != KeyEvent.VK_D
                 && key != KeyEvent.VK_Z
                 && key != KeyEvent.VK_X
-                && key != KeyEvent.VK_C) {
+                && key != KeyEvent.VK_C
+                && key != KeyEvent.VK_G) {
 			System.out.println("\nNot a valid command");
 
 		}

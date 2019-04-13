@@ -28,7 +28,8 @@ public class Fish implements Drawable {
     private float x, y, z;
     private float vx = Rand.getFloatBetween(0.002f, 0.005f), vy = Rand.getFloatBetween(0.002f, 0.005f), vz = Rand.getFloatBetween(0.002f, 0.005f);
 
-    private float height, radius, tailRotation;
+    private float height, radius, tailRotation = 0;
+    private boolean tailRotationFlipped = false;
 
     private double[] eqn0 = {0, 0.0, 1.0, 0};
     private double[] eqn1 = {0, 0.0, -1.0, 0};
@@ -65,15 +66,15 @@ public class Fish implements Drawable {
 
     private void drawleftFin() {
         //Fin :: Child of body
-        FishFin leftFin = new FishFin(radius, height);
+        FishFinLeft leftFin = new FishFinLeft(radius, height);
         leftFin.setTranslations(0, 0, height * 0.8);
         leftFin.setEqn(eqn0);
         root.addChild(leftFin);
     }
 
-    private void drawRightFin(){
+    private void drawRightFin() {
         //Fin :: Child of Body
-        FishFin rightFin = new FishFin(radius, height);
+        FishFinRight rightFin = new FishFinRight(radius, height);
         rightFin.setTranslations(0, 0, -height * 0.8);
         rightFin.setEqn(eqn1);
         root.addChild(rightFin);
@@ -103,7 +104,7 @@ public class Fish implements Drawable {
         rightEyeSclera.addChild(rightEyePupil);
     }
 
-    private void drawSail(){
+    private void drawSail() {
         //Sail front :: Child of Body
         FishSail frontSail = new FishSail(radius, height);
         frontSail.setTranslations(radius * 0.55, height * 0.7, 0);
@@ -158,17 +159,30 @@ public class Fish implements Drawable {
         y += vy * speed;
         z += vz * speed;
 
+        System.out.println(tailRotation);
+        if (tailRotation == 45) {
+            tailRotationFlipped = false;
+        } else if (tailRotation == -45) {
+            tailRotationFlipped = true;
+        }
+
+        if (tailRotationFlipped) {
+            tailRotation += 1;
+        } else {
+            tailRotation -= 1;
+        }
+
         if (y > (Tank.height / 2) - (radius * 0.25f + (radius * 0.3f))) {
             vy = -vy;
-            y = (Tank.height / 2) - (radius * 0.25f +  (radius * 0.3f));
+            y = (Tank.height / 2) - (radius * 0.25f + (radius * 0.3f));
 
-            System.out.println("Move Y -");
+            //System.out.println("Move Y -");
             rotation = -120;
         } else if (y < (-Tank.height / 2) + (radius + (radius * 0.3))) {
             vy = -vy;
             y = (-Tank.height / 2) + (radius + (radius * 0.3f));
 
-            System.out.println("Move Y +");
+            //System.out.println("Move Y +");
             rotation = 120;
         }
 
@@ -176,26 +190,25 @@ public class Fish implements Drawable {
             vx = -vx;
             x = (Tank.length / 2) - (radius + (radius * 0.3f));
 
-            System.out.println("Move X -");
+            // System.out.println("Move X -");
             rotation = 225;
         } else if (x < -(Tank.length / 2) + (radius + (radius * 0.3))) {
             vx = -vx;
             x = -(Tank.length / 2) + (radius + (radius * 0.3f));
 
-            System.out.println("Move X +");
+            // System.out.println("Move X +");
             rotation = -225;
         }
 
         if (z > (Tank.width / 2) - (radius + (radius * 0.3))) {
             vz = -vz;
-            z = (Tank.width / 2) -(radius + (radius * 0.3f));
-            System.out.println("Move Z -");
+            z = (Tank.width / 2) - (radius + (radius * 0.3f));
+            //System.out.println("Move Z -");
             rotation = 135;
         } else if (z < -(Tank.width / 2) + (radius + (radius * 0.3))) {
             vz = -vz;
             z = -(Tank.width / 2) + (radius + (radius * 0.3f));
-
-            System.out.println("Move Z +");
+            //System.out.println("Move Z +");
             rotation = -135;
         }
     }
@@ -215,8 +228,8 @@ public class Fish implements Drawable {
         }
     }
 
-    public class FishFin extends FishComponent {
-        public FishFin(double radius, double height) {
+    public class FishFinLeft extends FishComponent {
+        public FishFinLeft(double radius, double height) {
             super(radius, height);
         }
 
@@ -227,7 +240,7 @@ public class Fish implements Drawable {
             gl.glClipPlane(GL2.GL_CLIP_PLANE0, eqn, 0);
             gl.glEnable(GL2.GL_CLIP_PLANE0);
             Colour.setColourRGBA(fish, gl);
-
+            gl.glRotated(tailRotation, 1, 0, 0);
             gl.glScaled(radius * 0.5, height * 0.1, height * 0.5);
             glu.gluSphere(glUquadric, 1, 25, 20);
 
@@ -235,6 +248,28 @@ public class Fish implements Drawable {
             gl.glPopMatrix();
         }
     }
+
+    public class FishFinRight extends FishComponent {
+        public FishFinRight(double radius, double height) {
+            super(radius, height);
+        }
+
+        @Override
+        public void drawNode(GL2 gl, GLU glu, GLUquadric glUquadric, boolean filled) {
+            gl.glPushMatrix();
+
+            gl.glClipPlane(GL2.GL_CLIP_PLANE0, eqn, 0);
+            gl.glEnable(GL2.GL_CLIP_PLANE0);
+            Colour.setColourRGBA(fish, gl);
+            gl.glRotated(-tailRotation, 1, 0, 0);
+            gl.glScaled(radius * 0.5, height * 0.1, height * 0.5);
+            glu.gluSphere(glUquadric, 1, 25, 20);
+
+            gl.glDisable(GL2.GL_CLIP_PLANE0);
+            gl.glPopMatrix();
+        }
+    }
+
 
     public class FishTailTop extends FishComponent {
         public FishTailTop(double radius, double height) {
@@ -250,7 +285,9 @@ public class Fish implements Drawable {
             Colour.setColourRGBA(fish, gl);
 
             gl.glRotated(60, 0, 0, 1);
-            gl.glScaled(radius * 0.3, height * 1.2 , height * 0.1);
+            gl.glRotated(tailRotation, 1, 0, 0);
+
+            gl.glScaled(radius * 0.3, height * 1.2, height * 0.1);
             glu.gluSphere(glUquadric, 1, 25, 20);
 
             gl.glDisable(GL2.GL_CLIP_PLANE0);
@@ -272,7 +309,9 @@ public class Fish implements Drawable {
             Colour.setColourRGBA(fish, gl);
 
             gl.glRotated(-60, 0, 0, 1);
-            gl.glScaled(radius * 0.3, height * 1.2 , height * 0.1);
+            gl.glRotated(-tailRotation, 1, 0, 0);
+
+            gl.glScaled(radius * 0.3, height * 1.2, height * 0.1);
             glu.gluSphere(glUquadric, 1, 25, 20);
 
             gl.glDisable(GL2.GL_CLIP_PLANE0);
@@ -312,7 +351,7 @@ public class Fish implements Drawable {
         public void drawNode(GL2 gl, GLU glu, GLUquadric glUquadric, boolean filled) {
             gl.glPushMatrix();
             Colour.setColourRGBA(sclera, gl);
-            gl.glScaled(radius * 0.1,radius * 0.1, radius * 0.1);
+            gl.glScaled(radius * 0.1, radius * 0.1, radius * 0.1);
             glu.gluSphere(glUquadric, 1, 25, 20);
             gl.glPopMatrix();
         }
