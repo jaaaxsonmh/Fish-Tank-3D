@@ -288,11 +288,11 @@ public class FishScene implements GLEventListener, KeyListener {
 		}
 
 		if (key == KeyEvent.VK_1) {
-			if (animatorSpeed == 0.5f) {
+			if (animatorSpeed == 0.2f) {
 				System.out.println("\nSlow animator already enabled");
 				System.out.println("Animator Speed: " + animatorSpeed + "");
 			} else {
-				animatorSpeed = 0.5f;
+				animatorSpeed = 0.2f;
 				System.out.println("\nSlow animator enabled");
 				System.out.println("Animator Speed: " + animatorSpeed + "");
 			}

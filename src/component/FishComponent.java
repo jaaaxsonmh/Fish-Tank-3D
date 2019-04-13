@@ -19,17 +19,14 @@ public abstract class FishComponent implements Drawable {
     private LinkedList<FishComponent> children;
     public double radius;
     public double height;
-    public double animatorSpeed;
     private double rotationAngle, transX, transY, transZ;
-    private AXIS axis;
-    public double[] eqn = {0, 0.0, -1.0, 0};
+    public double[] eqn;
 
 
-    public FishComponent(double radius, double height, AXIS axis) {
+    public FishComponent(double radius, double height) {
         children = new LinkedList<>();
         this.radius = radius;
         this.height = height;
-        this.axis = axis;
     }
 
     @Override
@@ -55,20 +52,6 @@ public abstract class FishComponent implements Drawable {
     private void transformNode(GL2 gl) {
         // do the translation relative to the parent and then rotate and move nodes
         gl.glTranslated(transX, transY, transZ);
-
-        switch (axis) {
-            case X:
-                gl.glRotated(rotationAngle, 1, 0, 0);
-                break;
-            case Y:
-                gl.glRotated(rotationAngle, 0, 1, 0);
-                break;
-            case Z:
-                gl.glRotated(rotationAngle, 0, 0, 1);
-                break;
-            default:
-                break;
-        }
     }
 
     public void setTranslations(double x, double y, double z) {
@@ -81,18 +64,10 @@ public abstract class FishComponent implements Drawable {
         rotationAngle = theta;
     }
 
-    public double getSpeed() {
-        return animatorSpeed;
-    }
-
-    public void setSpeed(double animatorSpeed) {
-        this.animatorSpeed =  animatorSpeed;
-    }
-
     public void setEqn(double[] eqn) {
         this.eqn = eqn;
     }
 
-    public abstract void drawNode(GL2 gl, GLU glu, GLUquadric quadric, boolean filled);
+    public abstract void drawNode(GL2 gl, GLU glu, GLUquadric glUquadric, boolean filled);
 
 }
