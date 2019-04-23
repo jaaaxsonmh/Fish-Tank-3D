@@ -6,7 +6,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import component.BubbleManager;
 import component.FishComponent;
+import objects.Bubble;
 import objects.Fish;
 import objects.Water;
 import com.jogamp.opengl.*;
@@ -35,6 +37,7 @@ public class FishScene implements GLEventListener, KeyListener {
 	private Tank tank;
 	private Water water;
 	private Fish fish;
+	private BubbleManager bub;
 
 	private static GLCanvas canvas;
 
@@ -52,6 +55,9 @@ public class FishScene implements GLEventListener, KeyListener {
 	private FishScene() {
 		fish = new Fish(1.0f);
 		glut = new GLUT();
+		bub = new BubbleManager();
+		tank = new Tank(length, height, width);
+		water = new Water(length, height, width);
 	}
 
 	@Override
@@ -61,8 +67,7 @@ public class FishScene implements GLEventListener, KeyListener {
 		// calculate the position from the camera for fog.
 		float positionRelativeToCam = (float) camera.getDistance() * (float) camera.getFieldOfView();
 		
-		tank = new Tank(length, height, width);
-		water = new Water(length, height, width);
+
 		
 		// select and clear the model-view matrix
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
@@ -81,6 +86,7 @@ public class FishScene implements GLEventListener, KeyListener {
 
         if(animateEnabled) {
             fish.animate(animatorSpeed);
+            bub.stateManager(gl, glu, quadric, filled);
         }
 
         gl.glDisable(GL2.GL_LIGHTING);

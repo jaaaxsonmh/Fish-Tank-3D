@@ -16,7 +16,7 @@ public class Tank extends Cube {
 	private final Colour tankSide = new Colour(1.0f, 1.0f, 1.0f, 0.3f);
 
 	static float length;
-    static float height;
+    public static float height;
     static float width;
 	private static final float TANK_PANE = 0.01f;
 	

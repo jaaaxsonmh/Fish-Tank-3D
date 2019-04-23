@@ -24,11 +24,15 @@ public class Fish implements Drawable {
     private final Colour sclera = new Colour(1.0f, 1.0f, 1.0f, 1.0f);
     private final Colour pupil = new Colour(0.0f, 0.0f, 0.0f, 1.0f);
 
-    private float rotation = 0;
-    private float x, y, z;
+    public static float rotation = 0;
+    public static float x;
+    public static float y;
+    public static float z;
     private float vx = Rand.getFloatBetween(0.002f, 0.005f), vy = Rand.getFloatBetween(0.002f, 0.005f), vz = Rand.getFloatBetween(0.002f, 0.005f);
 
-    private float height, radius, tailRotation = 0;
+    public float height;
+    public static float radius;
+    public float tailRotation = 0;
     private boolean tailRotationFlipped = false;
 
     private double[] eqn0 = {0, 0.0, 1.0, 0};
@@ -38,6 +42,9 @@ public class Fish implements Drawable {
 
 
     private FishComponent root;
+
+    public Fish() {
+    }
 
     public Fish(float size) {
         radius = size * 0.5f;
@@ -159,17 +166,17 @@ public class Fish implements Drawable {
         y += vy * speed;
         z += vz * speed;
 
-        if (tailRotation == 45) {
+        if (tailRotation >= 45) {
             tailRotationFlipped = false;
-        } else if (tailRotation == -45) {
+        } else if (tailRotation <= -45) {
             tailRotationFlipped = true;
         }
 
 
         if (tailRotationFlipped) {
-            tailRotation += 1;
+            tailRotation += 1 * speed;
         } else {
-            tailRotation -= 1;
+            tailRotation -= 1 * speed;
         }
 
         rotation += 0.1f;
