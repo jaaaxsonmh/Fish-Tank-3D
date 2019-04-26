@@ -65,8 +65,6 @@ public class FishScene implements GLEventListener, KeyListener {
 		// calculate the position from the camera for fog.
 		float positionRelativeToCam = (float) camera.getDistance() * (float) camera.getFieldOfView();
 		
-
-		
 		// select and clear the model-view matrix
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
 		gl.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
@@ -85,6 +83,7 @@ public class FishScene implements GLEventListener, KeyListener {
         if(animateEnabled) {
             fish.animate(animatorSpeed);
             bub.stateManager(gl, glu, quadric, filled);
+
         }
 
         gl.glDisable(GL2.GL_LIGHTING);
@@ -96,6 +95,7 @@ public class FishScene implements GLEventListener, KeyListener {
 		gl.glDisable(GL2.GL_DEPTH_TEST);
 
         water.draw(gl, glut);
+        waterSurfaceTexture.draw(gl, glu, quadric, filled);
         tank.draw(gl, glut);
 
 
@@ -111,7 +111,6 @@ public class FishScene implements GLEventListener, KeyListener {
             guide.draw(gl,glu, quadric, filled);
         }
 
-        waterSurfaceTexture.draw(gl, glu, quadric, filled);
 
         //setUpFog(gl, positionRelativeToCam);
 
@@ -135,7 +134,7 @@ public class FishScene implements GLEventListener, KeyListener {
 		glu = new GLU();
 		quadric = glu.gluNewQuadric();
 		guide = new Guide();
-		waterSurfaceTexture = new SurfaceMapping("images/water-pool-texture-seamless.jpg");
+		waterSurfaceTexture = new SurfaceMapping(height,"D:\\University\\Fish-Tank-3D\\src\\images\\water-pool-texture-seamless.jpg");
 
 		camera.setLookAt(0, 0, 0);
 		camera.setDistance(15);

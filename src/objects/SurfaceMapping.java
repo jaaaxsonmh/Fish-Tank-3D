@@ -6,26 +6,27 @@ import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.glu.GLUquadric;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureIO;
+import utils.Colour;
 import utils.Drawable;
 
-import javax.xml.soap.Text;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 public class SurfaceMapping implements Drawable {
 
-
     private float yPos;
     private float width;
     private float length;
+    private float offset = 0;
     private Texture surfaceTexture;
     private boolean texture;
 
-    public SurfaceMapping(String textureFile){
-        this.yPos = Water.WATER_HEIGHT/2;
-        texture = (textureFile.trim().isEmpty());
+    public SurfaceMapping(float yPos, String file){
+        this.yPos = yPos/2 - 0.105f;
+        texture = !(file.isEmpty() || file == null);
         if(texture) {
             try {
-                setSurfaceTexture(textureFile);
+                setSurfaceTexture(file);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -36,8 +37,11 @@ public class SurfaceMapping implements Drawable {
     }
 
     public void setSurfaceTexture(String file) throws IOException {
-        surfaceTexture = TextureIO.newTexture(this.getClass().getResourceAsStream(file), true, "jpg");
-    }
+
+        surfaceTexture = TextureIO.newTexture(new FileInputStream(file), true, ".jpg");
+        System.out.println(surfaceTexture);
+   }
+
 
     @Override
     public void draw(GL2 gl, GLU glu, GLUquadric quadric, boolean filled) {
@@ -48,29 +52,32 @@ public class SurfaceMapping implements Drawable {
 
             surfaceTexture.setTexParameteri(gl, GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
             surfaceTexture.setTexParameteri(gl, GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
+
+        } else {
+            Colour.setColourRGBA(Water.waterColour, gl);
         }
 
 
-        System.out.println((int)length +" " + (int) width);
+        // System.out.println((int)length +" " + (int) width);
         for(float i = -length/2; i < length/2; i++) {
             for(float j = -width/2; j < width/2; j++) {
                 gl.glBegin(filled ? GL2.GL_QUADS : GL.GL_LINE_LOOP);
 
                 // makes a 1x1 square grid.
                 gl.glNormal3f(0.0f, 1.0f, 0.0f);
-                gl.glTexCoord2d(2, 1);
+                gl.glTexCoord2d(2 - offset, 1 + offset);
                 gl.glVertex3d(i, yPos, j );
 
                 gl.glNormal3f(0.0f, 1.0f, 0.0f);
-                gl.glTexCoord2d(2, 1);
+                gl.glTexCoord2d(2 - offset, 2 + offset);
                 gl.glVertex3d(i + 1, yPos, j);
 
                 gl.glNormal3d(0,1,0);
-                gl.glTexCoord2d(1 , 2 );
+                gl.glTexCoord2d(1 + offset , 2  - offset);
                 gl.glVertex3d(i +  1, yPos,j + 1);
 
                 gl.glNormal3d(0,1,0);
-                gl.glTexCoord2d(1 , 1 );
+                gl.glTexCoord2d(1 + offset , 1  + offset);
                 gl.glVertex3d(i , yPos,j + 1);
 
                 gl.glEnd();
@@ -78,11 +85,14 @@ public class SurfaceMapping implements Drawable {
         }
         if(texture) {
             surfaceTexture.disable(gl);
-
         }
     }
 
     public void animate() {
+        if(offset == 1)
+            offset = 0;
+        else
+            offset = 1;
     }
 
 

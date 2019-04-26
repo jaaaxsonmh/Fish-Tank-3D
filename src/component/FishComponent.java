@@ -17,11 +17,10 @@ import java.util.LinkedList;
 public abstract class FishComponent implements Drawable {
 
     private LinkedList<FishComponent> children;
-    public double radius;
-    public double height;
-    private double rotationAngle, transX, transY, transZ;
-    public double[] eqn;
-    private double theta, v1, v2, v3;
+    protected double radius;
+    protected double height;
+    private double transX, transY, transZ;
+    protected double[] eqn;
 
 
     public FishComponent(double radius, double height) {

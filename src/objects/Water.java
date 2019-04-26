@@ -11,8 +11,9 @@ import utils.Colour;
 
 public class Water extends Tank {
 
-    private final Colour tankSide2 = new Colour(0.0f, 0.89803f, 0.98823f, 0.2f);
-    public static final float WATER_HEIGHT = height - 0.1f;
+    static final Colour waterColour = new Colour(0.0f, 0.89803f, 0.98823f, 0.2f);
+    private float waterHeight = height - 0.1f;
+
 
     public Water(float length, float height, float width) {
         super(length, height, width);
@@ -20,9 +21,9 @@ public class Water extends Tank {
 
     public void draw(GL2 gl, GLUT glut) {
         gl.glPushMatrix();
-        Colour.setColourRGBA(tankSide2, gl);
+        Colour.setColourRGBA(waterColour, gl);
         gl.glTranslated(0, -0.05, 0);
-        gl.glScalef(length - 0.1f, WATER_HEIGHT, width - 0.1f);
+        gl.glScalef(length - 0.1f, waterHeight, width - 0.1f);
         super.draw(glut);
         gl.glPopMatrix();
     }
