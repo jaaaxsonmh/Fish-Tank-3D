@@ -8,9 +8,7 @@ import java.awt.event.WindowEvent;
 
 import component.BubbleManager;
 import component.FishComponent;
-import objects.Bubble;
-import objects.Fish;
-import objects.Water;
+import objects.*;
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.awt.GLCanvas;
 
@@ -18,7 +16,6 @@ import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.glu.GLUquadric;
 import com.jogamp.opengl.util.FPSAnimator;
 import com.jogamp.opengl.util.gl2.GLUT;
-import objects.Tank;
 import utils.Guide;
 
 /**
@@ -38,6 +35,7 @@ public class FishScene implements GLEventListener, KeyListener {
 	private Water water;
 	private Fish fish;
 	private BubbleManager bub;
+	private SurfaceMapping waterSurfaceTexture;
 
 	private static GLCanvas canvas;
 
@@ -113,6 +111,7 @@ public class FishScene implements GLEventListener, KeyListener {
             guide.draw(gl,glu, quadric, filled);
         }
 
+        waterSurfaceTexture.draw(gl, glu, quadric, filled);
 
         //setUpFog(gl, positionRelativeToCam);
 
@@ -136,6 +135,7 @@ public class FishScene implements GLEventListener, KeyListener {
 		glu = new GLU();
 		quadric = glu.gluNewQuadric();
 		guide = new Guide();
+		waterSurfaceTexture = new SurfaceMapping("images/water-pool-texture-seamless.jpg");
 
 		camera.setLookAt(0, 0, 0);
 		camera.setDistance(15);
