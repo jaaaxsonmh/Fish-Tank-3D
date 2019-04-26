@@ -47,6 +47,8 @@ public class FishScene implements GLEventListener, KeyListener {
 	private static float length = 5f;
     private static float width = 3f;
     private static float height = 2f;
+    private final long TIME_DELAY = 300L;
+    private long prevTime = System.currentTimeMillis() - TIME_DELAY;
 
 	private TrackballCamera camera = new TrackballCamera(canvas);
 
@@ -84,7 +86,13 @@ public class FishScene implements GLEventListener, KeyListener {
             fish.animate(animatorSpeed);
             bub.stateManager(gl, glu, quadric, filled);
 
+            long currentTime = System.currentTimeMillis();
+            if((currentTime-prevTime) >= TIME_DELAY) {
+                prevTime = currentTime;
+                waterSurfaceTexture.animate();
+            }
         }
+
 
         gl.glDisable(GL2.GL_LIGHTING);
 		gl.glDisable(GL2.GL_LIGHT0);
@@ -96,7 +104,9 @@ public class FishScene implements GLEventListener, KeyListener {
 
         water.draw(gl, glut);
         waterSurfaceTexture.draw(gl, glu, quadric, filled);
+
         tank.draw(gl, glut);
+
 
 
         gl.glEnable(GL2.GL_DEPTH_TEST);
@@ -106,6 +116,7 @@ public class FishScene implements GLEventListener, KeyListener {
 		gl.glEnable(GL2.GL_LIGHTING);
 		gl.glEnable(GL2.GL_LIGHT0);
 		gl.glEnable(GL2.GL_LIGHT1);
+
 
         if(guideEnabled) {
             guide.draw(gl,glu, quadric, filled);
@@ -134,8 +145,7 @@ public class FishScene implements GLEventListener, KeyListener {
 		glu = new GLU();
 		quadric = glu.gluNewQuadric();
 		guide = new Guide();
-		waterSurfaceTexture = new SurfaceMapping(height,"D:\\University\\Fish-Tank-3D\\src\\images\\water-pool-texture-seamless.jpg");
-
+		waterSurfaceTexture = new SurfaceMapping(height/2 - 0.105f,"src\\images\\water-pool-texture-seamless.jpg");
 		camera.setLookAt(0, 0, 0);
 		camera.setDistance(15);
 		camera.setFieldOfView(40);

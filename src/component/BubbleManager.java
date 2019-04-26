@@ -28,9 +28,9 @@ public class BubbleManager {
             if(BUBBLE_AMOUNT > bubbleList.size()) {
                 float transparency = Rand.getFloatBetween(0.5f, 1.0f);
                 float radius = Rand.getFloatBetween(0.03f, 0.05f);
-                float x = Fish.x - (Rand.getFloatBetween(0.2f, 0.5f) * Fish.radius);
+                float x = Fish.x - (Rand.getFloatBetween(0.0f, 1.0f) * Fish.radius);
                 float y = Fish.y + (Rand.getFloatBetween(0.2f, 0.4f) * Fish.radius);
-                float z = Fish.z - (Rand.getFloatBetween(0.2f, 0.5f) * Fish.radius);
+                float z = Fish.z - (Rand.getFloatBetween(0.0f,-1.0f) * Fish.radius);
                 System.out.println(y);
                 float age = Rand.getFloatBetween(0.005f, 0.01f);
 
@@ -41,9 +41,9 @@ public class BubbleManager {
 
     private void reset() {
         for (Bubble bub : bubbleList) {
-            float resetX = Fish.x - ((Rand.getFloatBetween(0.2f, 0.5f) * Fish.radius) * (float) Math.sin(Math.toRadians(Fish.rotation)));
+            float resetX = Fish.x - ((Rand.getFloatBetween(0.0f, 1.0f) * Fish.radius) * (float) Math.sin(Math.toRadians(Fish.rotation)));
             float resetY = Fish.y + (Rand.getFloatBetween(0.2f, 0.4f) * Fish.radius);
-            float resetZ = Fish.z - ((Rand.getFloatBetween(0.2f, 0.5f) * Fish.radius) * (float) Math.cos(Math.toRadians(Fish.rotation)));
+            float resetZ = Fish.z - ((Rand.getFloatBetween(0.0f, -1.0f) * Fish.radius) * (float) Math.cos(Math.toRadians(Fish.rotation)));
             float radius = Rand.getFloatBetween(0.02f, 0.04f);
             float transparency = Rand.getFloatBetween(0.3f, 1.0f);
 

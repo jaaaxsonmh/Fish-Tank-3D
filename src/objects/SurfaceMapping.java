@@ -22,7 +22,7 @@ public class SurfaceMapping implements Drawable {
     private boolean texture;
 
     public SurfaceMapping(float yPos, String file){
-        this.yPos = yPos/2 - 0.105f;
+        this.yPos = yPos;
         texture = !(file.isEmpty() || file == null);
         if(texture) {
             try {
@@ -31,7 +31,6 @@ public class SurfaceMapping implements Drawable {
                 e.printStackTrace();
             }
         }
-
         length = Tank.length;
         width = Tank.width;
     }
@@ -89,10 +88,10 @@ public class SurfaceMapping implements Drawable {
     }
 
     public void animate() {
-        if(offset == 1)
-            offset = 0;
+        if(offset == 0.1f)
+            offset = 0.0f;
         else
-            offset = 1;
+            offset = 0.1f;
     }
 
 
