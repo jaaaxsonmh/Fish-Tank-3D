@@ -12,6 +12,11 @@ import utils.Drawable;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+/**
+ * @author Jack Hosking
+ * studentID 16932920
+ */
+
 public class SurfaceMapping implements Drawable {
 
     private float yPos;
@@ -23,7 +28,7 @@ public class SurfaceMapping implements Drawable {
 
     public SurfaceMapping(float yPos, String file){
         this.yPos = yPos;
-        texture = !(file.isEmpty() || file == null);
+        texture = !file.isEmpty();
         if(texture) {
             try {
                 setSurfaceTexture(file);
@@ -35,7 +40,7 @@ public class SurfaceMapping implements Drawable {
         width = Tank.width;
     }
 
-    public void setSurfaceTexture(String file) throws IOException {
+    private void setSurfaceTexture(String file) throws IOException {
 
         surfaceTexture = TextureIO.newTexture(new FileInputStream(file), true, ".jpg");
         System.out.println(surfaceTexture);

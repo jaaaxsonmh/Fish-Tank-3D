@@ -6,7 +6,7 @@ import utils.Colour;
 
 /**
  * @author Jack Hosking
- * @studentID 16932920
+ * studentID 16932920
  */
 
 public class Water extends Tank {

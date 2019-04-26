@@ -4,18 +4,15 @@ import component.FishComponent;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.glu.GLUquadric;
-import utils.AXIS;
 import utils.Colour;
 import utils.Drawable;
 
-import objects.Tank;
-import objects.Water;
 import utils.Rand;
 
 
 /**
  * @author Jack Hosking
- * Student ID 16932920
+ * studentID 16932920
  */
 
 public class Fish implements Drawable {
@@ -30,21 +27,16 @@ public class Fish implements Drawable {
     public static float z;
     private float vx = Rand.getFloatBetween(0.002f, 0.005f), vy = Rand.getFloatBetween(0.002f, 0.005f), vz = Rand.getFloatBetween(0.002f, 0.005f);
 
-    public float height;
+    private float height;
     public static float radius;
-    public float tailRotation = 0;
+    private float tailRotation = 0;
     private boolean tailRotationFlipped = false;
 
     private double[] eqn0 = {0, 0.0, 1.0, 0};
     private double[] eqn1 = {0, 0.0, -1.0, 0};
     private double[] eqn2 = {0, 0.5, 0.0, 0};
-    private double[] eqn3 = {0, -0.5, 0.0, 0};
-
 
     private FishComponent root;
-
-    public Fish() {
-    }
 
     public Fish(float size) {
         radius = size * 0.5f;
@@ -66,6 +58,7 @@ public class Fish implements Drawable {
 
         FishTailBottom tailBottom = new FishTailBottom(radius, height);
         tailBottom.setTranslations(0, 0, 0);
+        double[] eqn3 = {0, -0.5, 0.0, 0};
         tailBottom.setEqn(eqn3);
         tailTop.addChild(tailBottom);
 

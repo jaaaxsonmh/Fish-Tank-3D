@@ -6,6 +6,11 @@ import com.jogamp.opengl.glu.GLUquadric;
 import utils.Colour;
 import utils.Drawable;
 
+/**
+ * @author Jack Hosking
+ * studentID 16932920
+ */
+
 public class Bubble implements Drawable {
 
     private Colour colour;

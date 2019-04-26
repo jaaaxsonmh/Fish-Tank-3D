@@ -7,8 +7,8 @@ import com.jogamp.opengl.glu.GLUquadric;
 
 /**
  * @author Jack Hosking
- * Student ID 16932920
- **/
+ * studentID 16932920
+ */
 
 public class Guide implements Drawable{
 

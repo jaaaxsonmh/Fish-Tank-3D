@@ -11,7 +11,7 @@ import com.jogamp.opengl.glu.GLU;
 
 /**
  * @author Jack Hosking
- * @studentID 16932920
+ * studentID 16932920
  */
 
 public class TrackballCamera implements MouseListener, MouseMotionListener, MouseWheelListener {
@@ -33,21 +33,21 @@ public class TrackballCamera implements MouseListener, MouseMotionListener, Mous
     private int mouseButton;
 
     // camera parameters
-    double fieldOfView      = 45;
-    double distanceToOrigin = 5;
-    double windowWidth      = 1;
-    double windowHeight     = 1;
+    private double fieldOfView      = 45;
+    private double distanceToOrigin = 5;
+    private double windowWidth      = 1;
+    private double windowHeight     = 1;
 
     // GLU context
-    GLU glu = new GLU();
+    private GLU glu = new GLU();
 
 
     /**
      * Constructor of the trackball camera
-     * @param drawable the GL drawable context to register this camera with
+     * @param canvas the GL drawable context to register this camera with
      */
 
-    public TrackballCamera(GLCanvas canvas) {
+    TrackballCamera(GLCanvas canvas) {
         canvas.addMouseListener(this);
         canvas.addMouseWheelListener(this);
         canvas.addMouseMotionListener(this);
@@ -89,7 +89,7 @@ public class TrackballCamera implements MouseListener, MouseMotionListener, Mous
      * Gets the distance of the camera from the lookAt point
      * @return the distance of the camera from the lookAt point
      */
-    public double getDistance() {
+    double getDistance() {
         return distanceToOrigin;
     }
 
@@ -97,7 +97,7 @@ public class TrackballCamera implements MouseListener, MouseMotionListener, Mous
      * Sets the distance of the camera to the lookAt point.
      * @param dist the new distance of the camera to the lookAt point
      */
-    public void setDistance(double dist) {
+    void setDistance(double dist) {
         distanceToOrigin = dist;
         limitDistance();
     }
@@ -115,7 +115,7 @@ public class TrackballCamera implements MouseListener, MouseMotionListener, Mous
      * Gets the field of view angle of the camera
      * @return the field of view of the camera in degrees
      */
-    public double getFieldOfView() {
+    double getFieldOfView() {
         return fieldOfView;
     }
 
@@ -123,7 +123,7 @@ public class TrackballCamera implements MouseListener, MouseMotionListener, Mous
      * Sets the field of view angle of the camera.
      * @param fov the new field of view angle of the camera in degrees
      */
-    public void setFieldOfView(double fov) {
+    void setFieldOfView(double fov) {
         fieldOfView = fov;
         limitFieldOfView();
     }
@@ -146,7 +146,7 @@ public class TrackballCamera implements MouseListener, MouseMotionListener, Mous
      * @param y Y coordinate of the lookAt point
      * @param z Z coordinate of the lookAt point
      */
-    public void setLookAt(double x, double y, double z) {
+    void setLookAt(double x, double y, double z) {
         lookAt = new double[]{x, y, z};
     }
 

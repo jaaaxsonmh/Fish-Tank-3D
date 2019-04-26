@@ -4,7 +4,7 @@ import com.jogamp.opengl.util.gl2.GLUT;
 
 /**
  * @author Jack Hosking
- * @studentID 16932920
+ * studentID 16932920
  */
 
 public class Cube {

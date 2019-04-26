@@ -7,7 +7,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import component.BubbleManager;
-import component.FishComponent;
 import objects.*;
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.awt.GLCanvas;
@@ -20,8 +19,9 @@ import utils.Guide;
 
 /**
  * @author Jack Hosking
- * Studen ID16932920
+ * studentID 16932920
  */
+
 
 public class FishScene implements GLEventListener, KeyListener {
 

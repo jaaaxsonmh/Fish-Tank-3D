@@ -1,17 +1,15 @@
 package component;
 
-
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.glu.GLUquadric;
-import utils.AXIS;
 import utils.Drawable;
 
 import java.util.LinkedList;
 
 /**
  * @author Jack Hosking
- * @studentID 16932920
+ * studentID 16932920
  */
 
 public abstract class FishComponent implements Drawable {

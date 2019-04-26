@@ -4,7 +4,7 @@ import com.jogamp.opengl.GL2;
 
 /**
  * @author Jack Hosking
- * @studentID 16932920
+ * studentID 16932920
  */
 
 public class Colour {
@@ -13,9 +13,7 @@ public class Colour {
     private float blue = 1.0f;
     private float alpha = 1.0f;
 
-    public Colour() {
-
-    }
+    public Colour() { }
 
     // construct rgba
     public Colour(float red, float green, float blue, float alpha) {
