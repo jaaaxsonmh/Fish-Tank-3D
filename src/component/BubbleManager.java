@@ -65,12 +65,18 @@ public class BubbleManager {
         }
     }
 
-    public void stateManager(GL2 gl, GLU glu, GLUquadric quadric, boolean filled) {
-        populate();
+    public void stateManager(GL2 gl, GLU glu, GLUquadric quadric, boolean filled, boolean animateEnalbed) {
+
+        if(animateEnalbed){
+            populate();
+            reset();
+        }
+
         for(Bubble bub : bubbleList) {
             bub.draw(gl, glu, quadric, filled);
-            bub.animate();
-            reset();
+            if(animateEnalbed) {
+                bub.animate();
+            }
         }
     }
 }
