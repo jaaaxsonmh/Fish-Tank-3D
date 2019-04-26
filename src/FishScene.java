@@ -45,7 +45,7 @@ public class FishScene implements GLEventListener, KeyListener {
 	private boolean filled = true, animateEnabled = true, guideEnabled = false;
 	private float animatorSpeed = 1.0f;
 	private static float length = 5f;
-    private static float width = 3f;
+    private static float width = 5f;
     private static float height = 2f;
     private final long TIME_DELAY = 300L;
     private long prevTime = System.currentTimeMillis() - TIME_DELAY;
@@ -89,17 +89,15 @@ public class FishScene implements GLEventListener, KeyListener {
             long currentTime = System.currentTimeMillis();
             if((currentTime-prevTime) >= TIME_DELAY) {
                 prevTime = currentTime;
-                waterSurfaceTexture.animate();
+              waterSurfaceTexture.animate();
             }
         }
-
 
         gl.glDisable(GL2.GL_LIGHTING);
 		gl.glDisable(GL2.GL_LIGHT0);
 		gl.glDisable(GL2.GL_LIGHT1);
 
-		gl.glEnable(GL2.GL_BLEND);
-
+        gl.glEnable(GL2.GL_BLEND);
 		gl.glDisable(GL2.GL_DEPTH_TEST);
 
         water.draw(gl, glut);
@@ -107,11 +105,8 @@ public class FishScene implements GLEventListener, KeyListener {
 
         tank.draw(gl, glut);
 
-
-
         gl.glEnable(GL2.GL_DEPTH_TEST);
-
-		gl.glDisable(GL2.GL_BLEND);
+        gl.glDisable(GL2.GL_BLEND);
 
 		gl.glEnable(GL2.GL_LIGHTING);
 		gl.glEnable(GL2.GL_LIGHT0);
@@ -122,8 +117,7 @@ public class FishScene implements GLEventListener, KeyListener {
             guide.draw(gl,glu, quadric, filled);
         }
 
-
-        //setUpFog(gl, positionRelativeToCam);
+        setUpFog(gl, positionRelativeToCam);
 
 		gl.glFlush();
 	}
@@ -145,7 +139,7 @@ public class FishScene implements GLEventListener, KeyListener {
 		glu = new GLU();
 		quadric = glu.gluNewQuadric();
 		guide = new Guide();
-		waterSurfaceTexture = new SurfaceMapping(height/2 - 0.105f,"src\\images\\water-pool-texture-seamless.jpg");
+		waterSurfaceTexture = new SurfaceMapping(height/2-0.105f ,"src\\images\\water-pool-texture-seamless.jpg");
 		camera.setLookAt(0, 0, 0);
 		camera.setDistance(15);
 		camera.setFieldOfView(40);
@@ -194,13 +188,20 @@ public class FishScene implements GLEventListener, KeyListener {
 
 	private void setUpFog(GL2 gl, float positionRelativeToCam) {
 
-		if (positionRelativeToCam < 1000) {
-			fogDensity = 0.0f;
-		} else if (positionRelativeToCam >= 1000 && positionRelativeToCam < 1100) {
-			fogDensity = 0.1f;
-		} else if (positionRelativeToCam >= 1100 && positionRelativeToCam <= 1200) {
-			fogDensity = 1.0f;
-		}
+	    if(positionRelativeToCam < 900) {
+	        fogDensity = 0.0f;
+        } else {
+            fogDensity = positionRelativeToCam / 10000;
+        }
+	    System.out.println(fogDensity);
+
+//		if (positionRelativeToCam < 1000) {
+//			fogDensity = 0.0f;
+//		} else if (positionRelativeToCam >= 1000 && positionRelativeToCam < 1100) {
+//			fogDensity = 0.1f;
+//		} else if (positionRelativeToCam >= 1100 && positionRelativeToCam <= 1200) {
+//			fogDensity = 1.0f;
+//		}
 		
 		gl.glEnable(GL2.GL_FOG);
 		gl.glFogfv(GL2.GL_FOG_COLOR, fogColour, 0);

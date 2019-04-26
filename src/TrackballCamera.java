@@ -210,7 +210,6 @@ public class TrackballCamera implements MouseListener, MouseMotionListener, Mous
                 distanceToOrigin += 0.1 * (p.y - oldMousePos.y);
                 limitDistance();
             }
-
         }
         oldMousePos = p;
     }
