@@ -36,7 +36,7 @@ public class BubbleManager {
                 float x = Fish.x - (Rand.getFloatBetween(0.0f, 1.0f) * Fish.radius);
                 float y = Fish.y + (Rand.getFloatBetween(0.2f, 0.4f) * Fish.radius);
                 float z = Fish.z - (Rand.getFloatBetween(0.0f,-1.0f) * Fish.radius);
-                System.out.println(y);
+                //System.out.println(y);
                 float age = Rand.getFloatBetween(0.005f, 0.01f);
 
                 bubbleList.add(new Bubble(transparency, radius, WHITE, x, y, z, age));

@@ -53,10 +53,10 @@ public class FishScene implements GLEventListener, KeyListener {
     private TrackballCamera camera = new TrackballCamera(canvas);
 
     private FishScene() {
-        /**
-         * Fish needs to be smaller size than the tank
-         * didnt have time to make conditions for base constructor if initilized
-         * value if greater than one of the tank sides.
+        /*
+          Fish needs to be smaller size than the tank
+          didnt have time to make conditions for base constructor if initilized
+          value if greater than one of the tank sides.
          */
         fish = new Fish(2.0f);
         glut = new GLUT();
@@ -197,7 +197,7 @@ public class FishScene implements GLEventListener, KeyListener {
         } else {
             fogDensity = positionRelativeToCam / 10000;
         }
-        System.out.println(fogDensity);
+        //System.out.println(fogDensity);
 
 //		if (positionRelativeToCam < 1000) {
 //			fogDensity = 0.0f;
@@ -226,6 +226,7 @@ public class FishScene implements GLEventListener, KeyListener {
         System.out.println("1: SLOW ANIMATION SPEED");
         System.out.println("2: NORMAL ANIMATION SPEED");
         System.out.println("3: FAST ANIMATION SPEED");
+        System.out.println("======= DISABLED =======");
         System.out.println("A / Z: Increase and decrease length");
         System.out.println("S / X: Increase and decrease width");
         System.out.println("D / C: Increase and decrease height\n");
