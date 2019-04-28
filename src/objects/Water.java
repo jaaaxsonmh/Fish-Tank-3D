@@ -11,7 +11,7 @@ import utils.Colour;
 
 public class Water extends Tank {
 
-    private static final Colour waterColour = new Colour(0.0f, 0.89803f, 0.98823f, 0.4f);
+    private static final Colour waterColour = new Colour(0.0f, 0.89803f, 0.98823f, 0.2f);
     private float waterHeight = height - 0.1f;
 
 

@@ -27,15 +27,14 @@ public class FishScene implements GLEventListener, KeyListener {
 
     private Guide guide;
 
-    private float fogDensity = 0.0f;
-
-    private static final float[] fogColour = new float[]{0.9f, 0.9f, 0.9f};
+    private static final float[] fogColour = new float[]{1.0f, 1.0f, 1.0f};
 
     private Tank tank;
     private Water water;
     private Fish fish;
     private BubbleManager bub;
     private SurfaceMapping waterSurfaceTexture;
+    private SurfaceMapping sandSurfaceTexture;
 
     private static GLCanvas canvas;
 
@@ -44,9 +43,9 @@ public class FishScene implements GLEventListener, KeyListener {
     private GLUquadric quadric;
     private boolean filled = true, animateEnabled = true, guideEnabled = false;
     private float animatorSpeed = 1.0f;
-    private static float length = 12f;
-    private static float width = 12f;
-    private static float height = 4f;
+    private static float length = 5f;
+    private static float width = 3f;
+    private static float height = 3f;
     private final long TIME_DELAY = 300L;
     private long prevTime = System.currentTimeMillis() - TIME_DELAY;
 
@@ -58,7 +57,7 @@ public class FishScene implements GLEventListener, KeyListener {
           didnt have time to make conditions for base constructor if initilized
           value if greater than one of the tank sides.
          */
-        fish = new Fish(2.0f);
+        fish = new Fish(1.5f);
         glut = new GLUT();
         bub = new BubbleManager();
         tank = new Tank(length, height, width);
@@ -84,16 +83,17 @@ public class FishScene implements GLEventListener, KeyListener {
         int style = filled ? GLU.GLU_FILL : GLU.GLU_LINE;
         glu.gluQuadricDrawStyle(quadric, style);
 
-        fish.draw(gl, glu, quadric, filled);
-
         if (animateEnabled) {
             fish.animate(animatorSpeed);
             long currentTime = System.currentTimeMillis();
             if ((currentTime - prevTime) >= TIME_DELAY) {
                 prevTime = currentTime;
                 waterSurfaceTexture.animate();
+                sandSurfaceTexture.animate();
             }
         }
+
+        fish.draw(gl, glu, quadric, filled);
 
         bub.stateManager(gl, glu, quadric, filled, animateEnabled);
 
@@ -102,14 +102,16 @@ public class FishScene implements GLEventListener, KeyListener {
         gl.glDisable(GL2.GL_LIGHT1);
 
         gl.glEnable(GL2.GL_BLEND);
+        waterSurfaceTexture.draw(gl, glu, quadric, filled);
+        sandSurfaceTexture.draw(gl,glu,quadric,filled);
+
         gl.glDisable(GL2.GL_DEPTH_TEST);
 
         water.draw(gl, glut);
-        waterSurfaceTexture.draw(gl, glu, quadric, filled);
-
         tank.draw(gl, glut);
 
         gl.glEnable(GL2.GL_DEPTH_TEST);
+
         gl.glDisable(GL2.GL_BLEND);
 
         gl.glEnable(GL2.GL_LIGHTING);
@@ -134,16 +136,17 @@ public class FishScene implements GLEventListener, KeyListener {
     @Override
     public void init(GLAutoDrawable drawable) {
         GL2 gl = drawable.getGL().getGL2();
-        gl.glClearColor(0.9f, 0.9f, 0.9f, 1.0f);
+        gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         gl.setSwapInterval(1);
 
         gl.glShadeModel(GL2.GL_SMOOTH);
         camera = new TrackballCamera(canvas);
-
         glu = new GLU();
         quadric = glu.gluNewQuadric();
         guide = new Guide();
         waterSurfaceTexture = new SurfaceMapping(height / 2 - 0.105f, "src\\images\\water-pool-texture-seamless.jpg");
+        waterSurfaceTexture.setTransparency(0.4f);
+        sandSurfaceTexture = new SurfaceMapping(-height/2, "src\\images\\sand-texture-seamless.jpg");
         camera.setLookAt(0, 0, 0);
         camera.setDistance(15);
         camera.setFieldOfView(40);
@@ -192,20 +195,12 @@ public class FishScene implements GLEventListener, KeyListener {
 
     private void setUpFog(GL2 gl, float positionRelativeToCam) {
 
+        float fogDensity = 0.0f;
         if (positionRelativeToCam <= 600) {
             fogDensity = 0.0f;
         } else {
             fogDensity = positionRelativeToCam / 10000;
         }
-        //System.out.println(fogDensity);
-
-//		if (positionRelativeToCam < 1000) {
-//			fogDensity = 0.0f;
-//		} else if (positionRelativeToCam >= 1000 && positionRelativeToCam < 1100) {
-//			fogDensity = 0.1f;
-//		} else if (positionRelativeToCam >= 1100 && positionRelativeToCam <= 1200) {
-//			fogDensity = 1.0f;
-//		}
 
         gl.glEnable(GL2.GL_FOG);
         gl.glFogfv(GL2.GL_FOG_COLOR, fogColour, 0);

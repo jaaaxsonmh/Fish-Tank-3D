@@ -25,6 +25,7 @@ public class SurfaceMapping implements Drawable {
     private float offset = 0;
     private Texture surfaceTexture;
     private boolean texture;
+    private float transparency = 1.0f;
 
     public SurfaceMapping(float yPos, String file) {
         this.yPos = yPos;
@@ -46,6 +47,9 @@ public class SurfaceMapping implements Drawable {
         System.out.println(surfaceTexture);
     }
 
+    public void setTransparency(float transparency){
+        this.transparency = transparency;
+    }
 
     @Override
     public void draw(GL2 gl, GLU glu, GLUquadric quadric, boolean filled) {
@@ -55,6 +59,8 @@ public class SurfaceMapping implements Drawable {
 
         surfaceTexture.setTexParameteri(gl, GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
         surfaceTexture.setTexParameteri(gl, GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
+
+        Colour.setDynamicColourRGBA(new Colour(1.0f,1.0f,1.0f), transparency, gl);
 
         // System.out.println((int)length +" " + (int) width);
         for (float i = -length / 2; i < length / 2; i++) {
