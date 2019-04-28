@@ -27,7 +27,7 @@ public class FishScene implements GLEventListener, KeyListener {
 
     private Guide guide;
 
-    private static final float[] fogColour = new float[]{1.0f, 1.0f, 1.0f};
+    private static final float[] fogColour = new float[]{0.95f, 0.95f, 0.95f};
 
     private Tank tank;
     private Water water;
@@ -89,7 +89,6 @@ public class FishScene implements GLEventListener, KeyListener {
             if ((currentTime - prevTime) >= TIME_DELAY) {
                 prevTime = currentTime;
                 waterSurfaceTexture.animate();
-                sandSurfaceTexture.animate();
             }
         }
 
@@ -118,7 +117,6 @@ public class FishScene implements GLEventListener, KeyListener {
         gl.glEnable(GL2.GL_LIGHT0);
         gl.glEnable(GL2.GL_LIGHT1);
 
-
         if (guideEnabled) {
             guide.draw(gl, glu, quadric, filled);
         }
@@ -136,7 +134,7 @@ public class FishScene implements GLEventListener, KeyListener {
     @Override
     public void init(GLAutoDrawable drawable) {
         GL2 gl = drawable.getGL().getGL2();
-        gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        gl.glClearColor(0.95f, 0.95f, 0.95f, 1.0f);
         gl.setSwapInterval(1);
 
         gl.glShadeModel(GL2.GL_SMOOTH);
